@@ -10,9 +10,9 @@ const imageModules = import.meta.glob(
 
 // Known car image folders
 const carFolderSet = new Set([
-  'Audi A3', 'Audi Q7', 'BMW 5', 'Jaguar XF', 'Rover 75',
-  'Škoda Felicia', 'Škoda Octavia', 'Toyota Yaris',
-  'Volvo V60', 'Volvo V90', 'VW Passat'
+  'Audi A3', 'Audi Q7', 'BMW 5', 'Jaguar XF', 'Mazda5',
+  'Peugeot 407', 'Rover 75', 'Škoda Felicia', 'Škoda Octavia',
+  'Toyota Yaris', 'Volvo V60', 'Volvo V90', 'Volvo XC60', 'VW Passat'
 ])
 
 // Group images by car folder name
@@ -39,7 +39,7 @@ const references = [
   },
   {
     car: 'Volvo XC60',
-    imageFolder: null,
+    imageFolder: 'Volvo XC60',
     service: 'Dočištění, voskování, vyživení nelakovaných plastů, „tekuté stěrače"',
     quote: 'Vypadá to skvěle a prokouklo to fest.',
     author: 'Dominik K.'
@@ -88,7 +88,7 @@ const references = [
   },
   {
     car: 'Peugeot 407',
-    imageFolder: null,
+    imageFolder: 'Peugeot 407',
     service: 'Dekontaminace, leštění a ochrana laku + tepování a čištění interiéru',
     quote: 'Skvěle odvedená práce se zaměřením na detail. Perfektně umyté auto zvenku i zevnitř, provoněné, naleštěné. Myslím, že takto vyblýskané auto nebylo ani při koupi.',
     author: 'Jana M.'
@@ -144,7 +144,7 @@ const references = [
   },
   {
     car: 'Mazda 5',
-    imageFolder: null,
+    imageFolder: 'Mazda5',
     service: 'Renovace světlometů',
     quote: 'Super, jako nové!',
     author: 'Richard Š.'

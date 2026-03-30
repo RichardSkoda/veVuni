@@ -5,12 +5,12 @@ import { useI18n } from '../i18n'
 
 const { t } = useI18n()
 
-import before1 from '../assets/images/before1.jpg'
-import before2 from '../assets/images/before2.jpg'
-import before3 from '../assets/images/before3.jpg'
-import after1 from '../assets/images/after1.jpg'
-import after2 from '../assets/images/after2.jpg'
-import after3 from '../assets/images/after3.jpg'
+import before1 from '../assets/images/Peugeot 407/before1.jpg'
+import before2 from '../assets/images/Peugeot 407/before2.jpg'
+import before3 from '../assets/images/Peugeot 407/before3.jpg'
+import after1 from '../assets/images/Peugeot 407/after1.jpg'
+import after2 from '../assets/images/Peugeot 407/after2.jpg'
+import after3 from '../assets/images/Peugeot 407/after3.jpg'
 
 const activeTab = ref('before')
 
