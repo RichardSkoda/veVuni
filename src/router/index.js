@@ -36,6 +36,12 @@ const routes = [
     path: '/predprodejni-priprava',
     name: 'predprodejni',
     component: () => import('../views/PredprodejniView.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('../views/AdminView.vue'),
+    meta: { hideNav: true }
   }
 ]
 

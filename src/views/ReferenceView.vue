@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
 
 // Load all images from car subfolders
@@ -157,8 +157,40 @@ const lightboxImages = ref([])
 const lightboxIndex = ref(0)
 const lightboxCar = ref('')
 
-function openLightbox(folder, index) {
-  const images = getImages(folder)
+// Dynamic references from API
+const dynamicRefs = ref([])
+
+// All references: dynamic (newest) first, then static
+const allReferences = computed(() => {
+  const dynamic = dynamicRefs.value.map(r => ({
+    car: r.car,
+    imageFolder: null,
+    service: r.service,
+    quote: r.quote || null,
+    author: r.author || null,
+    apiImages: r.images || []
+  }))
+  return [...dynamic, ...references]
+})
+
+onMounted(() => {
+  document.addEventListener('keydown', onKeydown)
+  // Load dynamic references
+  fetch('/api/references.php')
+    .then(r => r.json())
+    .then(data => {
+      if (Array.isArray(data)) dynamicRefs.value = data
+    })
+    .catch(() => {})
+})
+
+function getRefImages(r) {
+  if (r.apiImages && r.apiImages.length) return r.apiImages
+  return getImages(r.imageFolder)
+}
+
+function openLightbox(folder, index, apiImages) {
+  const images = apiImages && apiImages.length ? apiImages : getImages(folder)
   if (!images.length) return
   lightboxImages.value = images
   lightboxIndex.value = index
@@ -187,7 +219,6 @@ function onKeydown(e) {
   else if (e.key === 'ArrowLeft') prevImage()
 }
 
-onMounted(() => document.addEventListener('keydown', onKeydown))
 onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 </script>
 
@@ -198,7 +229,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
       <div class="container">
         <div class="page-hero-label">Spokojení zákazníci</div>
         <h1 class="page-hero-title">Reference</h1>
-        <p class="page-hero-sub">{{ references.length }}+ realizovaných zakázek a stovky spokojených zákazníků</p>
+        <p class="page-hero-sub">{{ allReferences.length }}+ realizovaných zakázek a stovky spokojených zákazníků</p>
       </div>
     </section>
 
@@ -206,32 +237,32 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
     <section class="page-section">
       <div class="container">
         <div class="ref-grid">
-          <div v-for="(r, i) in references" :key="i" class="ref-card" :class="{ 'has-gallery': getImages(r.imageFolder).length }">
+          <div v-for="(r, i) in allReferences" :key="i" class="ref-card" :class="{ 'has-gallery': getRefImages(r).length }">
 
             <!-- Image gallery -->
-            <div v-if="getImages(r.imageFolder).length" class="ref-gallery">
-              <div class="ref-gallery-main" @click="openLightbox(r.imageFolder, 0)">
-                <img :src="getImages(r.imageFolder)[0]" :alt="r.car" loading="lazy" />
+            <div v-if="getRefImages(r).length" class="ref-gallery">
+              <div class="ref-gallery-main" @click="openLightbox(r.imageFolder, 0, r.apiImages)">
+                <img :src="getRefImages(r)[0]" :alt="r.car" loading="lazy" />
                 <div class="ref-gallery-overlay">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
-                  <span>{{ getImages(r.imageFolder).length }} fotek</span>
+                  <span>{{ getRefImages(r).length }} fotek</span>
                 </div>
               </div>
-              <div v-if="getImages(r.imageFolder).length > 1" class="ref-gallery-thumbs">
+              <div v-if="getRefImages(r).length > 1" class="ref-gallery-thumbs">
                 <div
-                  v-for="(img, j) in getImages(r.imageFolder).slice(1, 4)"
+                  v-for="(img, j) in getRefImages(r).slice(1, 4)"
                   :key="j"
                   class="ref-thumb"
-                  @click="openLightbox(r.imageFolder, j + 1)"
+                  @click="openLightbox(r.imageFolder, j + 1, r.apiImages)"
                 >
                   <img :src="img" :alt="r.car" loading="lazy" />
                 </div>
                 <div
-                  v-if="getImages(r.imageFolder).length > 4"
+                  v-if="getRefImages(r).length > 4"
                   class="ref-thumb ref-thumb-more"
-                  @click="openLightbox(r.imageFolder, 4)"
+                  @click="openLightbox(r.imageFolder, 4, r.apiImages)"
                 >
-                  +{{ getImages(r.imageFolder).length - 4 }}
+                  +{{ getRefImages(r).length - 4 }}
                 </div>
               </div>
             </div>
