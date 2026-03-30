@@ -86,7 +86,7 @@ onMounted(() => {
   <section id="contact" class="section section-dark" ref="sectionRef">
     <div class="container">
       <h2 class="section-title">{{ t.contact.title }}</h2>
-      <p class="section-subtitle">{{ t.contact.subtitle }}</p>
+      <p v-if="t.contact.subtitle" class="section-subtitle">{{ t.contact.subtitle }}</p>
 
       <div class="contact-grid" :class="{ visible: isVisible }">
         <div class="contact-info">
@@ -102,11 +102,21 @@ onMounted(() => {
 
           <div class="info-card">
             <div class="info-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <h4>{{ t.contact.phoneLabel }}</h4>
+              <p><a href="tel:+420733656261">+420 733 656 261</a></p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
             <div>
               <h4>{{ t.contact.emailLabel }}</h4>
-              <p><a href="mailto:michal.tauchman86@gmail.com">michal.tauchman86@gmail.com</a></p>
+              <p><a href="mailto:michal@vevuni.cz">michal@vevuni.cz</a></p>
             </div>
           </div>
 

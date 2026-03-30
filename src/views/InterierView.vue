@@ -42,7 +42,7 @@ const services = [
       <div class="container">
         <div class="page-hero-label">Péče o vůz</div>
         <h1 class="page-hero-title">Interiér</h1>
-        <p class="page-hero-sub">Hloubkové čištění a ochrana interiéru vašeho vozu</p>
+        <p class="page-hero-sub">Hloubkové čištění a ochrana interiéru Vašeho vozu</p>
       </div>
     </section>
 

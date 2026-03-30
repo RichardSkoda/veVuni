@@ -25,7 +25,7 @@ const services = [
   },
   {
     title: 'Leštění laku – Compound',
-    desc: 'Je lak vašeho vozu mírně až středně zašlý, obsahuje škrábance, oxidaci, hologramy a další poškození? Pak je ideální čas použít leštěnku s mikroabrazivním složením a velmi šetrně za pomocí strojní leštičky lak rozleštit. Směs leštících olejů lak navíc rozzáří a vyhladí.',
+    desc: 'Je lak Vašeho vozu mírně až středně zašlý, obsahuje škrábance, oxidaci, hologramy a další poškození? Pak je ideální čas použít leštěnku s mikroabrazivním složením a velmi šetrně za pomocí strojní leštičky lak rozleštit. Směs leštících olejů lak navíc rozzáří a vyhladí.',
     image: imgProduct3
   },
   {
@@ -72,7 +72,7 @@ const services = [
       <div class="container">
         <div class="page-hero-label">Péče o vůz</div>
         <h1 class="page-hero-title">Exteriér</h1>
-        <p class="page-hero-sub">Komplexní péče o lak, disky, světlomety a skla vašeho vozu</p>
+        <p class="page-hero-sub">Komplexní péče o lak, disky, světlomety a skla Vašeho vozu</p>
       </div>
     </section>
 

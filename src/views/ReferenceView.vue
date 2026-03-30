@@ -11,17 +11,28 @@ const imageModules = import.meta.glob(
 // Known car image folders
 const carFolderSet = new Set([
   'Audi A3', 'Audi Q7', 'BMW 5', 'Jaguar XF', 'Mazda5',
-  'Peugeot 407', 'Rover 75', 'Škoda Felicia', 'Škoda Octavia',
-  'Toyota Yaris', 'Volvo V60', 'Volvo V90', 'Volvo XC60', 'VW Passat'
+  'Peugeot 407', 'Rover 75', 'Škoda Fabia', 'Škoda Felicia', 'Škoda Octavia',
+  'Škoda Superb', 'Toyota Auris', 'Volvo V90', 'Volvo XC60', 'VW Passat'
 ])
+
+// Files to exclude from specific folders
+const excludedFiles = {
+  'Peugeot 407': ['before1.jpg', 'before2.jpg', 'before3.jpg'],
+  'Jaguar XF': ['20180803_155434.webp', 'jaguar upravené VeVůni.webp'],
+  'VW Passat': ['Passat upravené VeVůni.webp']
+}
 
 // Group images by car folder name
 const carImages = {}
 for (const [path, url] of Object.entries(imageModules)) {
-  const match = path.match(/\/images\/(.+?)\/[^/]+$/)
+  const match = path.match(/\/images\/(.+?)\/([^/]+)$/)
   if (match && carFolderSet.has(match[1])) {
-    if (!carImages[match[1]]) carImages[match[1]] = []
-    carImages[match[1]].push(url)
+    const folder = match[1]
+    const fileName = decodeURIComponent(match[2])
+    // Skip excluded files
+    if (excludedFiles[folder] && excludedFiles[folder].some(f => fileName.includes(f))) continue
+    if (!carImages[folder]) carImages[folder] = []
+    carImages[folder].push(url)
   }
 }
 
@@ -95,38 +106,24 @@ const references = [
   },
   {
     car: 'Škoda Fabia',
-    imageFolder: null,
+    imageFolder: 'Škoda Fabia',
     service: 'Ruční čištění exteriéru a interiéru, voskování',
     quote: 'Perfektně odvedená práce. Vše bylo pečlivě umyté, jak uvnitř, tak zvenku. Auto krásně vonělo, bylo vyblýskané.',
     author: 'Hana J.'
   },
   {
     car: 'Škoda Superb',
-    imageFolder: null,
+    imageFolder: 'Škoda Superb',
     service: 'Ruční čištění exteriéru a interiéru, odstranění kontaminantů a mírných defektů laku',
     quote: '... ty jsi ďábel, takhle čisté bylo naposledy v autosalonu...',
     author: 'Tomáš K.'
   },
   {
     car: 'Toyota Auris',
-    imageFolder: null,
+    imageFolder: 'Toyota Auris',
     service: 'Balíčky Exteriér základ + Interiér základ',
     quote: 'Je to krása, teď to bude úplně jiná jízda.',
     author: 'Kamila M.'
-  },
-  {
-    car: 'Volvo V60',
-    imageFolder: 'Volvo V60',
-    service: 'Dočištění exteriéru, voskování',
-    quote: null,
-    author: null
-  },
-  {
-    car: 'Toyota Yaris',
-    imageFolder: 'Toyota Yaris',
-    service: 'Čištění exteriéru a interiéru',
-    quote: null,
-    author: null
   },
   {
     car: 'Rover 75',
@@ -229,7 +226,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
       <div class="container">
         <div class="page-hero-label">Spokojení zákazníci</div>
         <h1 class="page-hero-title">Reference</h1>
-        <p class="page-hero-sub">{{ allReferences.length }}+ realizovaných zakázek a stovky spokojených zákazníků</p>
+        <p class="page-hero-sub">Desítky realizovaných zakázek a spokojených zákazníků</p>
       </div>
     </section>
 

@@ -385,7 +385,12 @@ import certImg from '../assets/images/M.webp'
   }
 
   .training-badge {
-    display: none;
+    text-align: center;
+  }
+
+  .training-photo {
+    width: 100%;
+    max-width: 350px;
   }
 }
 </style>

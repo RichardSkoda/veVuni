@@ -15,14 +15,14 @@ const packages = [
       'Očištění a ošetření disků kol',
       'Vyleštění skel, aplikace tekutých stěračů'
     ],
-    highlight: false
+    highlight: true
   },
   {
     name: 'Exteriér základ',
     time: 'cca 3 hodiny',
     price: '2 200 Kč',
     items: [
-      'Ruční dočištění exteriéru včetně rámů dveří a prahů',
+      'Dočištění exteriéru včetně rámů dveří a prahů',
       'Voskování laku',
       'Vyživení nelakovaných plastů',
       'Očištění a ošetření disků kol',
@@ -148,7 +148,7 @@ const individual = [
     <section class="page-cta">
       <div class="container">
         <h2>Chcete přesnou nabídku?</h2>
-        <p>Napište mi, popište váš vůz a zájem – připravím nabídku přímo pro vás.</p>
+        <p>Napište mi, popište Váš vůz a zájem – připravím nabídku přímo pro Vás.</p>
         <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat nezávazně</RouterLink>
       </div>
     </section>

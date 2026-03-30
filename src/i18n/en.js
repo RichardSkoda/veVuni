@@ -24,7 +24,7 @@ export default {
     ctaSecondary: 'Our services',
     stat1Number: '100+',
     stat1Label: 'Satisfied clients',
-    stat2Number: '5+',
+    stat2Number: '7+',
     stat2Label: 'Years of experience',
     stat3Number: '100%',
     stat3Label: 'Premium cosmetics'
@@ -77,7 +77,7 @@ export default {
   // Contact
   contact: {
     title: 'Request detailing services with no obligation!',
-    subtitle: 'Fill in all necessary details and I will get back to you as soon as possible.',
+    subtitle: '',
     addressLabel: 'Address',
     addressValue: 'Slunéčkova 1982\nLysá nad Labem, 289 22',
     emailLabel: 'E-mail',
@@ -112,7 +112,7 @@ export default {
 
   // Footer
   footer: {
-    description: 'Professional detailing services tailored to your needs. Complete care for your vehicle right at your parking spot.',
+    description: 'Professional detailing services tailored to your needs. Complete care for your vehicle.',
     navTitle: 'Navigation',
     pagesTitle: 'Pages',
     contactTitle: 'Contact',

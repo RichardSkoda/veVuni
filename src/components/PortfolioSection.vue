@@ -12,7 +12,7 @@ import after1 from '../assets/images/Peugeot 407/after1.jpg'
 import after2 from '../assets/images/Peugeot 407/after2.jpg'
 import after3 from '../assets/images/Peugeot 407/after3.jpg'
 
-const activeTab = ref('before')
+const activeTab = ref('after')
 
 const beforeImages = computed(() => [
   { src: before1, alt: t.value.portfolio.beforeAlt + ' 1' },
@@ -83,19 +83,19 @@ onMounted(() => {
       <div class="tabs">
         <button
           class="tab"
-          :class="{ active: activeTab === 'before' }"
-          @click="activeTab = 'before'"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
-          {{ t.portfolio.tabBefore }}
-        </button>
-        <button
-          class="tab"
           :class="{ active: activeTab === 'after' }"
           @click="activeTab = 'after'"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
           {{ t.portfolio.tabAfter }}
+        </button>
+        <button
+          class="tab"
+          :class="{ active: activeTab === 'before' }"
+          @click="activeTab = 'before'"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+          {{ t.portfolio.tabBefore }}
         </button>
       </div>
 

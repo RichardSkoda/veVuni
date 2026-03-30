@@ -34,8 +34,8 @@ const pageLinks = computed(() => [
   { label: t.value.nav.references,   to: '/reference' },
   { label: t.value.nav.exterier,     to: '/exterier' },
   { label: t.value.nav.interier,     to: '/interier' },
-  { label: t.value.nav.cenik,        to: '/cenik' },
-  { label: t.value.nav.predprodejni, to: '/predprodejni-priprava' }
+  { label: t.value.nav.predprodejni, to: '/predprodejni-priprava' },
+  { label: t.value.nav.cenik,        to: '/cenik' }
 ])
 
 // --- Scroll ---

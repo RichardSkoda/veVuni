@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import feliciaSideBySide from '../assets/images/Škoda Felicia/pred prodejem/side_by_side.webp'
 
 const pros = [
   'Vizuální stav (první dojem) → až +15 % hodnoty',
@@ -96,6 +97,13 @@ const packages = [
       </div>
     </section>
 
+    <!-- Before/After showcase -->
+    <section class="showcase-section">
+      <div class="container">
+        <img :src="feliciaSideBySide" alt="Škoda Felicia – před a po předprodejní přípravě" class="showcase-img" />
+      </div>
+    </section>
+
     <!-- Packages -->
     <section class="page-section page-section-alt">
       <div class="container">
@@ -123,7 +131,7 @@ const packages = [
     <section class="page-cta">
       <div class="container">
         <h2>Prodáváte vůz?</h2>
-        <p>Napište mi — připravíme váš vůz tak, aby zaujal na první pohled.</p>
+        <p>Napište mi — připravíme Váš vůz tak, aby zaujal na první pohled.</p>
         <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat předprodejní přípravu</RouterLink>
       </div>
     </section>
@@ -186,6 +194,22 @@ const packages = [
 .factor-card li { display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.9rem; color: var(--color-text); line-height: 1.5; }
 .factor-yes li svg { color: #22c55e; flex-shrink: 0; margin-top: 2px; }
 .factor-no li svg { color: #f43f5e; flex-shrink: 0; margin-top: 2px; }
+
+/* Showcase */
+.showcase-section {
+  padding: 3rem 0;
+  background: var(--color-bg-light);
+  text-align: center;
+}
+
+.showcase-img {
+  max-width: 100%;
+  width: 900px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  display: block;
+  margin: 0 auto;
+}
 
 /* Packages */
 .pkg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }

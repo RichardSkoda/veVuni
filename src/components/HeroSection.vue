@@ -14,7 +14,8 @@ const scrollToServices = () => {
 </script>
 
 <template>
-  <section id="hero" class="hero" :style="{ backgroundImage: `url(${heroBg})` }">
+  <section id="hero" class="hero">
+    <div class="hero-bg" :style="{ backgroundImage: `url(${heroBg})` }"></div>
     <div class="hero-overlay"></div>
     <div class="hero-particles">
       <div v-for="i in 20" :key="i" class="particle" :style="{
@@ -69,18 +70,24 @@ const scrollToServices = () => {
   align-items: center;
   overflow: hidden;
   background-color: #0b0f14;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center right;
   background-repeat: no-repeat;
+  z-index: 0;
 }
 
-/* Gradient overlay – solid dark on the left, fading to transparent on the right */
+/* Gradient overlay – solid dark on the right, fading to transparent on the left */
 .hero-overlay {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(
-      to right,
+      to left,
       rgba(11, 15, 20, 0.92) 0%,
       rgba(11, 15, 20, 0.85) 30%,
       rgba(11, 15, 20, 0.55) 55%,
@@ -95,7 +102,7 @@ const scrollToServices = () => {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 15% 60%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 85% 60%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -140,6 +147,8 @@ const scrollToServices = () => {
   z-index: 2;
   padding-top: calc(var(--header-height) + 3rem);
   padding-bottom: 4rem;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .hero-text {
@@ -269,7 +278,7 @@ const scrollToServices = () => {
 }
 
 @media (max-width: 768px) {
-  .hero {
+  .hero-bg {
     background-position: center;
   }
 
@@ -281,6 +290,10 @@ const scrollToServices = () => {
         rgba(11, 15, 20, 0.6) 40%,
         rgba(11, 15, 20, 0.8) 100%
       );
+  }
+
+  .hero-content {
+    justify-content: center;
   }
 
   .hero-text {
