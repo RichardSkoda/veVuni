@@ -2,7 +2,7 @@
 import { RouterLink, useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
 import { useI18n } from '../i18n'
-import logoImg from '../assets/images/logo.png'
+import logoImg from '../assets/images/Loga/Logo-ve-vuni_Bile.png'
 
 const { t } = useI18n()
 const router = useRouter()

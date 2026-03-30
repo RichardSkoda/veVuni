@@ -1,7 +1,6 @@
 <script setup>
-import { ref } from 'vue'
 import { useI18n } from '../i18n'
-import heroBg from '../assets/images/jag.png'
+import heroBg from '../assets/images/main_jag.webp'
 
 const { t } = useI18n()
 
@@ -25,37 +24,34 @@ const scrollToServices = () => {
       }"></div>
     </div>
     <div class="container hero-content">
-      <div class="hero-badge">{{ t.hero.badge }}</div>
-      <h1 class="hero-title">
-        <span class="hero-title-line">{{ t.hero.titleLine1 }}</span>
-        <span class="hero-title-accent">{{ t.hero.titleLine2 }}</span>
-      </h1>
-      <p class="hero-description">
-        {{ t.hero.description }}
-      </p>
-      <div class="hero-actions">
-        <button class="btn btn-primary btn-lg" @click="scrollToContact">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          {{ t.hero.ctaPrimary }}
-        </button>
-        <button class="btn btn-outline btn-lg" @click="scrollToServices">
-          {{ t.hero.ctaSecondary }}
-        </button>
-      </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <span class="stat-number">{{ t.hero.stat1Number }}</span>
-          <span class="stat-label">{{ t.hero.stat1Label }}</span>
+      <div class="hero-text">
+        <div class="hero-badge">{{ t.hero.badge }}</div>
+        <h1 class="hero-title">
+          <span class="hero-title-line">{{ t.hero.titleLine1 }}</span>
+          <span class="hero-title-accent">{{ t.hero.titleLine2 }}</span>
+        </h1>
+        <p class="hero-description">
+          {{ t.hero.description }}
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" @click="scrollToContact">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            {{ t.hero.ctaPrimary }}
+          </button>
+          <button class="btn btn-outline btn-lg" @click="scrollToServices">
+            {{ t.hero.ctaSecondary }}
+          </button>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number">{{ t.hero.stat2Number }}</span>
-          <span class="stat-label">{{ t.hero.stat2Label }}</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number">{{ t.hero.stat3Number }}</span>
-          <span class="stat-label">{{ t.hero.stat3Label }}</span>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number">{{ t.hero.stat2Number }}</span>
+            <span class="stat-label">{{ t.hero.stat2Label }}</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-number">{{ t.hero.stat3Number }}</span>
+            <span class="stat-label">{{ t.hero.stat3Label }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -71,20 +67,36 @@ const scrollToServices = () => {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  overflow: hidden;
   background-color: #0b0f14;
   background-size: cover;
-  background-position: center;
+  background-position: center right;
   background-repeat: no-repeat;
-  overflow: hidden;
 }
 
+/* Gradient overlay – solid dark on the left, fading to transparent on the right */
 .hero-overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(11, 15, 20, 0.65) 0%, rgba(11, 15, 20, 0.45) 40%, rgba(11, 15, 20, 0.75) 100%),
-    radial-gradient(ellipse at 20% 80%, rgba(201, 168, 76, 0.08) 0%, transparent 50%);
+    linear-gradient(
+      to right,
+      rgba(11, 15, 20, 0.92) 0%,
+      rgba(11, 15, 20, 0.85) 30%,
+      rgba(11, 15, 20, 0.55) 55%,
+      rgba(11, 15, 20, 0.15) 75%,
+      transparent 100%
+    );
+  z-index: 1;
+}
+
+/* Subtle accent glow */
+.hero-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 15% 60%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 /* Floating particles */
@@ -92,6 +104,7 @@ const scrollToServices = () => {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 1;
 }
 
 .particle {
@@ -121,11 +134,17 @@ const scrollToServices = () => {
   }
 }
 
+/* Content */
 .hero-content {
   position: relative;
   z-index: 2;
-  text-align: center;
-  padding-top: var(--header-height);
+  padding-top: calc(var(--header-height) + 3rem);
+  padding-bottom: 4rem;
+}
+
+.hero-text {
+  max-width: 560px;
+  text-align: left;
 }
 
 .hero-badge {
@@ -149,36 +168,38 @@ const scrollToServices = () => {
 
 .hero-title-line {
   display: block;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
   color: white;
   font-weight: 700;
   margin-bottom: 0.25rem;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 .hero-title-accent {
   display: block;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
   color: var(--color-accent);
   font-weight: 400;
   font-style: italic;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
 }
 
 .hero-description {
-  font-size: clamp(0.95rem, 2vw, 1.15rem);
-  color: rgba(255, 255, 255, 0.7);
-  max-width: 600px;
-  margin: 0 auto 2.5rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 480px;
+  margin-bottom: 2.5rem;
   line-height: 1.8;
   font-weight: 300;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
   animation: fadeInUp 0.8s ease 0.4s both;
 }
 
 .hero-actions {
   display: flex;
   gap: 1rem;
-  justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   animation: fadeInUp 0.8s ease 0.6s both;
 }
 
@@ -190,7 +211,6 @@ const scrollToServices = () => {
 .hero-stats {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 2rem;
   animation: fadeInUp 0.8s ease 0.8s both;
 }
@@ -207,11 +227,12 @@ const scrollToServices = () => {
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--color-accent);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .stat-label {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -219,7 +240,7 @@ const scrollToServices = () => {
 .stat-divider {
   width: 1px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .hero-scroll-indicator {
@@ -229,6 +250,7 @@ const scrollToServices = () => {
   transform: translateX(-50%);
   color: rgba(255, 255, 255, 0.4);
   animation: bounce 2s infinite;
+  z-index: 2;
 }
 
 @keyframes bounce {
@@ -247,6 +269,40 @@ const scrollToServices = () => {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    background-position: center;
+  }
+
+  .hero-overlay {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(11, 15, 20, 0.7) 0%,
+        rgba(11, 15, 20, 0.6) 40%,
+        rgba(11, 15, 20, 0.8) 100%
+      );
+  }
+
+  .hero-text {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-stats {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
   .hero-stats {
     flex-direction: column;
     gap: 1.5rem;

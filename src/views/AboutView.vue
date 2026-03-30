@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import certImg from '../assets/images/M.JPG'
 </script>
 
 <template>
@@ -104,14 +105,7 @@ import { RouterLink } from 'vue-router'
             </p>
           </div>
           <div class="training-badge">
-            <div class="badge-inner">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <circle cx="12" cy="8" r="6"/><path d="M9 11l3 3 3-3M12 21V14"/>
-                <path d="M7 21h10"/>
-              </svg>
-              <strong>Meguiar's</strong>
-              <span>Certified Detailer</span>
-            </div>
+            <img :src="certImg" alt="Certifikované školení Meguiar's" class="training-photo" />
           </div>
         </div>
       </div>
@@ -308,31 +302,11 @@ import { RouterLink } from 'vue-router'
   flex-shrink: 0;
 }
 
-.badge-inner {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  color: var(--color-accent);
-  text-align: center;
-}
-
-.badge-inner strong {
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.badge-inner span {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.6);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+.training-photo {
+  width: 400px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  object-fit: cover;
 }
 
 /* CTA */

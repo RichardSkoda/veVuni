@@ -1,26 +1,37 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 
+import imgProduct1 from '../assets/images/Produkty chemie/ImgW (8).webp'
+import imgProduct2 from '../assets/images/Produkty chemie/ImgW (10).webp'
+import imgProduct3 from '../assets/images/Produkty chemie/ImgW (6).webp'
+import imgProduct4 from '../assets/images/Produkty chemie/ImgW (4).webp'
+import imgProduct5 from '../assets/images/Produkty chemie/63600_meguiar-s-carpet-cloth-re-fresher-odstranovac-zapachu--vune-do-interieru-a-ozivovac-tkanin--709-ml.webp'
+
 const services = [
   {
     title: 'Luxování interiéru',
-    desc: 'Stejně jako exteriér, tak i interiér vozu je potřeba před začátkem detailingových prací řádně připravit. Důkladné luxování je činnost, kterou je potřeba začít. Samozřejmostí je luxování průduchů klimatizace i kufru.'
+    desc: 'Stejně jako exteriér, tak i interiér vozu je potřeba před začátkem detailingových prací řádně připravit. Důkladné luxování je činnost, kterou je potřeba začít. Samozřejmostí je luxování průduchů klimatizace i kufru.',
+    image: imgProduct1
   },
   {
     title: 'Tepování koberců a čalouněných sedaček',
-    desc: 'Jedná se o hloubkové čištění látkových i velurových prvků interiéru. Do textilie se pod tlakem nanáší speciální kapalina, která je z vlákna vzápětí odsávána. Takto je textil vyčištěný do hloubky a přesto v něm po dokončení prací zůstává jen nízká zbytková vlhkost. K tepování je používán tepovač Kärcher 5.100.'
+    desc: 'Jedná se o hloubkové čištění látkových i velurových prvků interiéru. Do textilie se pod tlakem nanáší speciální kapalina, která je z vlákna vzápětí odsávána. Takto je textil vyčištěný do hloubky a přesto v něm po dokončení prací zůstává jen nízká zbytková vlhkost. K tepování je používán tepovač Kärcher 5.100.',
+    image: imgProduct2
   },
   {
     title: 'Čištění a impregnace interiérových plastů',
-    desc: 'Měkčené i tvrdé plasty v interiéru je důležité nejen čistit, ale také chránit před UV zářením, aby postupně nesvětlaly a nedeformovaly se. Aplikací speciálního přípravku pro profesionální čištění interiéru v kombinaci s interiérovým detailerem Meguiar\'s řady Ultimate budou plasty ve Vašem vozu opět vypadat jako nové.'
+    desc: 'Měkčené i tvrdé plasty v interiéru je důležité nejen čistit, ale také chránit před UV zářením, aby postupně nesvětlaly a nedeformovaly se. Aplikací speciálního přípravku pro profesionální čištění interiéru v kombinaci s interiérovým detailerem Meguiar\'s řady Ultimate budou plasty ve Vašem vozu opět vypadat jako nové.',
+    image: imgProduct3
   },
   {
     title: 'Čištění a impregnace kožených povrchů',
-    desc: 'Je možné čistit kůži hladkou i perforovanou. Rozdíl čištění obou typů je jak v technice, tak i množství použité čistící kapaliny. Čištění perforované kůže zabere cca dvojnásobek času. Zásadní částí péče o kůži je její vyživení. K této proceduře je používán špičkový přírodní balzám, který kůži vyživuje, chrání a zanechává ji voňavou a příjemnou na dotek.'
+    desc: 'Je možné čistit kůži hladkou i perforovanou. Rozdíl čištění obou typů je jak v technice, tak i množství použité čistící kapaliny. Čištění perforované kůže zabere cca dvojnásobek času. Zásadní částí péče o kůži je její vyživení. K této proceduře je používán špičkový přírodní balzám, který kůži vyživuje, chrání a zanechává ji voňavou a příjemnou na dotek.',
+    image: imgProduct4
   },
   {
     title: 'Provonění interiéru, desinfekce klimatizace',
-    desc: 'Případné pachy ve voze je důležité nepřekrývat, ale likvidovat. Po detekci a odstranění zdroje zápachu je možné kontaminovaná místa ošetřit speciálním přípravkem, který pachy eliminuje a vytváří v interiéru dlouhotrvající vůni. Klimatizaci je možné rychle desinfikovat pomocí jednorázového prostředku Air Re-Fresher.'
+    desc: 'Případné pachy ve voze je důležité nepřekrývat, ale likvidovat. Po detekci a odstranění zdroje zápachu je možné kontaminovaná místa ošetřit speciálním přípravkem, který pachy eliminuje a vytváří v interiéru dlouhotrvající vůni. Klimatizaci je možné rychle desinfikovat pomocí jednorázového prostředku Air Re-Fresher.',
+    image: imgProduct5
   }
 ]
 </script>
@@ -43,6 +54,9 @@ const services = [
             <div class="svc-body">
               <h3>{{ svc.title }}</h3>
               <p>{{ svc.desc }}</p>
+            </div>
+            <div v-if="svc.image" class="svc-product">
+              <img :src="svc.image" :alt="svc.title" loading="lazy" />
             </div>
           </div>
         </div>
@@ -128,6 +142,26 @@ const services = [
 .svc-body h3 { font-family: var(--font-heading); font-size: 1.2rem; color: var(--color-primary); margin-bottom: 0.5rem; }
 .svc-body p { color: var(--color-text-light); line-height: 1.8; font-size: 0.95rem; }
 
+.svc-product {
+  flex-shrink: 0;
+  width: 225px;
+  height: 225px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.svc-product img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.25rem;
+}
+
 .page-cta {
   background: var(--color-primary);
   padding: 5rem 0;
@@ -157,7 +191,8 @@ const services = [
 .btn-lg { font-size: 1rem; padding: 1.1rem 3rem; }
 
 @media (max-width: 600px) {
-  .svc-card { padding: 1.5rem; gap: 1rem; }
+  .svc-card { padding: 1.5rem; gap: 1rem; flex-wrap: wrap; }
   .svc-number { font-size: 1.5rem; width: 2.5rem; }
+  .svc-product { width: 180px; height: 180px; }
 }
 </style>

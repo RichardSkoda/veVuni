@@ -1,56 +1,67 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 
+import imgProduct1 from '../assets/images/Produkty chemie/ImgW.webp'
+import imgProduct2 from '../assets/images/Produkty chemie/ImgW (1).webp'
+import imgProduct3 from '../assets/images/Produkty chemie/d0 (1).webp'
+import imgProduct4 from '../assets/images/Produkty chemie/d0.jpg'
+import imgProduct5 from '../assets/images/Produkty chemie/ImgW (2).webp'
+import imgProduct6 from '../assets/images/Produkty chemie/209511_meguiar-s-ultimate-all-wheel-cleaner.webp'
+import imgProduct7 from '../assets/images/Produkty chemie/ImgW (4).webp'
+import imgProduct8 from '../assets/images/Produkty chemie/ImgW (6).webp'
+import imgProduct9 from '../assets/images/Produkty chemie/G16216EU_2.webp'
+import imgProduct10 from '../assets/images/Produkty chemie/g8504-meguiars-perfect-clarity-glass-sealant.jpg'
+
 const services = [
   {
     title: 'Detailní čištění laku',
     desc: 'Před samotným procesem péče o lak je nutné jeho důkladné vyčištění. Kvalitní automatická či ruční myčka jsou dobrý začátek, nicméně hůře přístupná místa vozu je potřeba dočistit ručně. Nestihli jste svůj vůz před detailingem omýt? Nevadí, rád s Vaším vozem do myčky zajedu.',
-    icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'
+    image: imgProduct1
   },
   {
     title: 'Dekontaminace laku – Clay',
     desc: 'Jakmile je lak na pohled čistý, je možné přistoupit k jeho dekontaminaci od nečistot, se kterými si běžná mycí technika neporadí (asfalt, rez, pryskyřice, hmyz…). K tomuto účelu se využívá tzv. Clay, který tyto nečistoty šetrně a přesto důkladně odstraňuje.',
-    icon: 'M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18'
+    image: imgProduct2
   },
   {
     title: 'Leštění laku – Compound',
     desc: 'Je lak vašeho vozu mírně až středně zašlý, obsahuje škrábance, oxidaci, hologramy a další poškození? Pak je ideální čas použít leštěnku s mikroabrazivním složením a velmi šetrně za pomocí strojní leštičky lak rozleštit. Směs leštících olejů lak navíc rozzáří a vyhladí.',
-    icon: 'M5 3l14 9-14 9V3z'
+    image: imgProduct3
   },
   {
     title: 'Leštění laku – Polish',
     desc: 'Je lak Vašeho vozu stále jako nový? Byste rádi laku dodali lesk, hloubku a sytost barev? Pak je skvělou volbou použití neabrazivní leštěnky se směsí leštících olejů. Neabrazivní leštěnku je možné použít i jako druhý krok po leštění compoundem.',
-    icon: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'
+    image: imgProduct4
   },
   {
     title: 'Voskování laku – syntetický vosk',
     desc: 'Voskování je posledním krokem v komplexní péči o lak. Špičkový vosk na bázi syntetických polymerů podpoří lesk a hloubku laku a především poskytne karoserii neviditelnou ochranu na několik měsíců. Vosk také výborně odpuzuje vodu – nečistoty na laku hůře ulpívají a čištění je snazší.',
-    icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'
+    image: imgProduct5
   },
   {
     title: 'Ošetření disků a pneumatik',
     desc: 'Kola dělají auto, říká se. Jejich čistota a správná ochrana je neméně důležitá jako u zbylých částí vozu. Speciální přípravek z kol důkladně očistí brzdový prach či silniční nečistoty a zanechá je dokonale čistá pro případné další ošetření.',
-    icon: 'M12 12m-10 0a10 10 0 1 0 20 0a10 10 0 1 0-20 0'
+    image: imgProduct6
   },
   {
     title: 'Odstranění lokálních defektů laku',
     desc: 'Pokud poškození laku zasahuje pouze do vrchní čiré vrstvy, je možné lokální škrábance a oděrky rozleštit speciálním přípravkem na lokální opravy. Opravy mírných poškození lze provádět lokálně, šetrně a bezpečně.',
-    icon: 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
+    image: imgProduct7
   },
   {
     title: 'Oživení a ochrana nelakovaných plastů',
     desc: 'Blatníky, difuzory, lemy oken a další exteriérové části bývají vyvedeny v nelakovaném černém plastu. Postupem času ztrácí barvu a šednou. Aplikací vhodného prostředku dílům vrátíme jejich původní vzhled a ochráníme je proti UV záření.',
-    icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4'
+    image: imgProduct8
   },
   {
     title: 'Renovace světlometů',
     desc: 'Vypadají Vaše světlomety spíše jako mlhomety? S použitím správného přípravku je možné zmírnit jejich zažloutnutí, stopy oxidace a poškrábání. Dobře vidět a být viděn – jedno z hlavních pravidel v silničním provozu.',
-    icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
+    image: imgProduct9
   },
   {
     title: 'Leštění oken, zrcátek a nanášení tekutých stěračů',
     desc: 'Dobrý výhled z vozu je základní předpoklad bezpečné a spokojené jízdy. Aplikací „tekutých stěračů" nebudete muset v rychlostech nad 80 km/h běžné stěrače vůbec používat. Na skle se vytvoří ochranný nanopovlak s výbornými hydrofobními účinky.',
-    icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+    image: imgProduct10
   }
 ]
 </script>
@@ -73,6 +84,9 @@ const services = [
             <div class="svc-body">
               <h3>{{ svc.title }}</h3>
               <p>{{ svc.desc }}</p>
+            </div>
+            <div v-if="svc.image" class="svc-product">
+              <img :src="svc.image" :alt="svc.title" loading="lazy" />
             </div>
           </div>
         </div>
@@ -174,6 +188,26 @@ const services = [
   font-size: 0.95rem;
 }
 
+.svc-product {
+  flex-shrink: 0;
+  width: 225px;
+  height: 225px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.svc-product img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.25rem;
+}
+
 .page-cta {
   background: var(--color-primary);
   padding: 5rem 0;
@@ -208,7 +242,8 @@ const services = [
 .btn-lg { font-size: 1rem; padding: 1.1rem 3rem; }
 
 @media (max-width: 600px) {
-  .svc-card { padding: 1.5rem; gap: 1rem; }
+  .svc-card { padding: 1.5rem; gap: 1rem; flex-wrap: wrap; }
   .svc-number { font-size: 1.5rem; width: 2.5rem; }
+  .svc-product { width: 180px; height: 180px; }
 }
 </style>

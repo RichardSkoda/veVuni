@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRouter, useRoute } from 'vue-router'
 import { useI18n } from '../i18n'
-import logoImg from '../assets/images/logo.png'
+import logoImg from '../assets/images/Loga/Logo-ve-vuni_Bile.png'
 
 const { t, locale, toggleLocale } = useI18n()
 const router = useRouter()
@@ -218,10 +218,11 @@ onUnmounted(() => {
 }
 
 .logo-img {
-  height: 72px;
+  height: 48px;
   width: auto;
   display: block;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+  margin-right: 1.5rem;
 }
 
 /* Desktop Nav */
@@ -421,7 +422,8 @@ onUnmounted(() => {
   }
 
   .logo-img {
-    height: 52px;
+    height: 40px;
+    margin-right: 0;
   }
 }
 </style>
