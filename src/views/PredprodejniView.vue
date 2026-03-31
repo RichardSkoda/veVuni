@@ -1,55 +1,3 @@
-<script setup>
-import { RouterLink } from 'vue-router'
-import feliciaSideBySide from '../assets/images/Škoda Felicia/pred prodejem/side_by_side.webp'
-
-const pros = [
-  'Vizuální stav (první dojem) → až +15 % hodnoty',
-  'Perfektně vyčištěný interiér → kupující vnímá, že auto je „jako nové"',
-  'Odstranění skvrn a opotřebení → důležitý psychologický efekt',
-  'Odstranění drobných vad (škrábance, zažloutlá světla, zašlý lak)'
-]
-
-const cons = [
-  'Zápach (kouř, zvířata) → až -10 % hodnoty',
-  'Špinavý interiér → automatický tlak na slevu',
-  'Matný lak / škrábance → auto vypadá starší, než ve skutečnosti je',
-  'Špatné fotky → nedojde ani na osobní prohlídku vozu'
-]
-
-const packages = [
-  {
-    name: 'Kompletní příprava exteriér / interiér + focení',
-    price: '7 000 Kč',
-    items: [
-      'Detailní ruční mytí',
-      'Dekontaminace / leštění / voskování laku',
-      'Oživení nelakovaných plastů',
-      'Leštění světel a skel',
-      'Luxování, čištění a impregnace plastů',
-      'Tepování látkových / čištění a vyživení kožených sedaček',
-      'Provonění interiéru',
-      'Nafocení vozu pro inzerci'
-    ],
-    highlight: true
-  },
-  {
-    name: 'Základní příprava exteriér / interiér',
-    price: '4 000 Kč',
-    items: [
-      'Detailní ruční mytí',
-      'Rozleštění drobných defektů laku',
-      'Voskování laku',
-      'Oživení plastů',
-      'Leštění skel',
-      'Luxování',
-      'Čištění a impregnace plastů',
-      'Provonění interiéru'
-    ],
-    highlight: false
-  }
-]
-</script>
-
 <template>
   <div class="page-wrapper">
     <section class="page-hero">
@@ -137,6 +85,58 @@ const packages = [
     </section>
   </div>
 </template>
+
+<script setup>
+import { RouterLink } from 'vue-router'
+import feliciaSideBySide from '../assets/images/Škoda Felicia/pred prodejem/side_by_side.webp'
+
+const pros = [
+  'Vizuální stav (první dojem) → až +15 % hodnoty',
+  'Perfektně vyčištěný interiér → kupující vnímá, že auto je „jako nové"',
+  'Odstranění skvrn a opotřebení → důležitý psychologický efekt',
+  'Odstranění drobných vad (škrábance, zažloutlá světla, zašlý lak)'
+]
+
+const cons = [
+  'Zápach (kouř, zvířata) → až -10 % hodnoty',
+  'Špinavý interiér → automatický tlak na slevu',
+  'Matný lak / škrábance → auto vypadá starší, než ve skutečnosti je',
+  'Špatné fotky → nedojde ani na osobní prohlídku vozu'
+]
+
+const packages = [
+  {
+    name: 'Kompletní příprava exteriér / interiér + focení',
+    price: '7 000 Kč',
+    items: [
+      'Detailní ruční mytí',
+      'Dekontaminace / leštění / voskování laku',
+      'Oživení nelakovaných plastů',
+      'Leštění světel a skel',
+      'Luxování, čištění a impregnace plastů',
+      'Tepování látkových / čištění a vyživení kožených sedaček',
+      'Provonění interiéru',
+      'Nafocení vozu pro inzerci'
+    ],
+    highlight: true
+  },
+  {
+    name: 'Základní příprava exteriér / interiér',
+    price: '4 000 Kč',
+    items: [
+      'Detailní ruční mytí',
+      'Rozleštění drobných defektů laku',
+      'Voskování laku',
+      'Oživení plastů',
+      'Leštění skel',
+      'Luxování',
+      'Čištění a impregnace plastů',
+      'Provonění interiéru'
+    ],
+    highlight: false
+  }
+]
+</script>
 
 <style scoped>
 .page-wrapper { padding-top: var(--header-height); }

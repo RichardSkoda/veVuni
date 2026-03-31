@@ -1,87 +1,3 @@
-<script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
-import { useI18n } from '../i18n'
-
-const { t } = useI18n()
-
-const form = reactive({
-  name: '',
-  email: '',
-  service: '',
-  message: ''
-})
-
-const services = computed(() => t.value.contact.serviceOptions)
-
-const isSubmitting = ref(false)
-const submitStatus = ref(null) // 'success' | 'error' | null
-const statusMessage = ref('')
-
-const sectionRef = ref(null)
-const isVisible = ref(false)
-
-async function handleSubmit() {
-  if (!form.name || !form.email || !form.service || !form.message) {
-    submitStatus.value = 'error'
-    statusMessage.value = t.value.contact.errorFillAll
-    return
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(form.email)) {
-    submitStatus.value = 'error'
-    statusMessage.value = t.value.contact.errorEmail
-    return
-  }
-
-  isSubmitting.value = true
-  submitStatus.value = null
-
-  try {
-    const response = await fetch('/api/contact.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form })
-    })
-
-    if (response.ok) {
-      submitStatus.value = 'success'
-      statusMessage.value = t.value.contact.successMessage
-      form.name = ''
-      form.email = ''
-      form.service = ''
-      form.message = ''
-    } else {
-      throw new Error('Server error')
-    }
-  } catch (err) {
-    console.error('Contact form error:', err)
-    submitStatus.value = 'error'
-    statusMessage.value = t.value.contact.errorSend
-  } finally {
-    isSubmitting.value = false
-    setTimeout(() => {
-      submitStatus.value = null
-    }, 8000)
-  }
-}
-
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        isVisible.value = true
-        observer.disconnect()
-      }
-    },
-    { threshold: 0.1 }
-  )
-  if (sectionRef.value) {
-    observer.observe(sectionRef.value)
-  }
-})
-</script>
-
 <template>
   <section id="contact" class="section section-dark" ref="sectionRef">
     <div class="container">
@@ -205,6 +121,90 @@ onMounted(() => {
     </div>
   </section>
 </template>
+
+<script setup>
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
+
+const form = reactive({
+  name: '',
+  email: '',
+  service: '',
+  message: ''
+})
+
+const services = computed(() => t.value.contact.serviceOptions)
+
+const isSubmitting = ref(false)
+const submitStatus = ref(null) // 'success' | 'error' | null
+const statusMessage = ref('')
+
+const sectionRef = ref(null)
+const isVisible = ref(false)
+
+async function handleSubmit() {
+  if (!form.name || !form.email || !form.service || !form.message) {
+    submitStatus.value = 'error'
+    statusMessage.value = t.value.contact.errorFillAll
+    return
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(form.email)) {
+    submitStatus.value = 'error'
+    statusMessage.value = t.value.contact.errorEmail
+    return
+  }
+
+  isSubmitting.value = true
+  submitStatus.value = null
+
+  try {
+    const response = await fetch('/api/contact.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...form })
+    })
+
+    if (response.ok) {
+      submitStatus.value = 'success'
+      statusMessage.value = t.value.contact.successMessage
+      form.name = ''
+      form.email = ''
+      form.service = ''
+      form.message = ''
+    } else {
+      throw new Error('Server error')
+    }
+  } catch (err) {
+    console.error('Contact form error:', err)
+    submitStatus.value = 'error'
+    statusMessage.value = t.value.contact.errorSend
+  } finally {
+    isSubmitting.value = false
+    setTimeout(() => {
+      submitStatus.value = null
+    }, 8000)
+  }
+}
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        isVisible.value = true
+        observer.disconnect()
+      }
+    },
+    { threshold: 0.1 }
+  )
+  if (sectionRef.value) {
+    observer.observe(sectionRef.value)
+  }
+})
+</script>
 
 <style scoped>
 .contact-grid {

@@ -1,15 +1,55 @@
+<template>
+  <div class="page-wrapper">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-label">Péče o vůz</div>
+        <h1 class="page-hero-title">Exteriér</h1>
+        <p class="page-hero-sub">Komplexní péče o lak, disky, světlomety a skla Vašeho vozu</p>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="container">
+        <div class="services-list">
+          <div v-for="(svc, i) in services" :key="i" class="svc-card">
+            <div class="svc-number">{{ String(i + 1).padStart(2, '0') }}</div>
+            <div class="svc-body">
+              <h3>{{ svc.title }}</h3>
+              <p>{{ svc.desc }}</p>
+            </div>
+            <div v-if="svc.image" class="svc-product">
+              <img :src="svc.image" :alt="svc.title" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-cta">
+      <div class="container">
+        <h2>Zajímá vás konkrétní služba?</h2>
+        <p>Sestavíme Vám cenovou nabídku přímo na míru.</p>
+        <div class="cta-btns">
+          <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat nezávazně</RouterLink>
+          <RouterLink to="/cenik" class="btn btn-outline btn-lg">Zobrazit ceník</RouterLink>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
 <script setup>
 import { RouterLink } from 'vue-router'
 
 import imgProduct1 from '../assets/images/Produkty chemie/ImgW.webp'
 import imgProduct2 from '../assets/images/Produkty chemie/ImgW (1).webp'
-import imgProduct3 from '../assets/images/Produkty chemie/d0 (1).webp'
-import imgProduct4 from '../assets/images/Produkty chemie/d0.jpg'
-import imgProduct5 from '../assets/images/Produkty chemie/ImgW (2).webp'
+import imgProduct3 from '../assets/images/Produkty chemie/ImgW (2).webp'
+import imgProduct4 from '../assets/images/Produkty chemie/ImgW (3).webp'
+import imgProduct5 from '../assets/images/Produkty chemie/ImgW (4).webp'
 import imgProduct6 from '../assets/images/Produkty chemie/209511_meguiar-s-ultimate-all-wheel-cleaner.webp'
-import imgProduct7 from '../assets/images/Produkty chemie/ImgW (4).webp'
+import imgProduct7 from '../assets/images/Produkty chemie/ImgW (7).webp'
 import imgProduct8 from '../assets/images/Produkty chemie/ImgW (6).webp'
-import imgProduct9 from '../assets/images/Produkty chemie/G16216EU_2.webp'
+import imgProduct9 from '../assets/images/Produkty chemie/ImgW (10).webp'
 import imgProduct10 from '../assets/images/Produkty chemie/g8504-meguiars-perfect-clarity-glass-sealant.jpg'
 
 const services = [
@@ -65,46 +105,6 @@ const services = [
   }
 ]
 </script>
-
-<template>
-  <div class="page-wrapper">
-    <section class="page-hero">
-      <div class="container">
-        <div class="page-hero-label">Péče o vůz</div>
-        <h1 class="page-hero-title">Exteriér</h1>
-        <p class="page-hero-sub">Komplexní péče o lak, disky, světlomety a skla Vašeho vozu</p>
-      </div>
-    </section>
-
-    <section class="page-section">
-      <div class="container">
-        <div class="services-list">
-          <div v-for="(svc, i) in services" :key="i" class="svc-card">
-            <div class="svc-number">{{ String(i + 1).padStart(2, '0') }}</div>
-            <div class="svc-body">
-              <h3>{{ svc.title }}</h3>
-              <p>{{ svc.desc }}</p>
-            </div>
-            <div v-if="svc.image" class="svc-product">
-              <img :src="svc.image" :alt="svc.title" loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="page-cta">
-      <div class="container">
-        <h2>Zajímá vás konkrétní služba?</h2>
-        <p>Sestavíme Vám cenovou nabídku přímo na míru.</p>
-        <div class="cta-btns">
-          <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat nezávazně</RouterLink>
-          <RouterLink to="/cenik" class="btn btn-outline btn-lg">Zobrazit ceník</RouterLink>
-        </div>
-      </div>
-    </section>
-  </div>
-</template>
 
 <style scoped>
 .page-wrapper { padding-top: var(--header-height); }

@@ -1,41 +1,3 @@
-<script setup>
-import { RouterLink } from 'vue-router'
-
-import imgProduct1 from '../assets/images/Produkty chemie/ImgW (8).webp'
-import imgProduct2 from '../assets/images/Produkty chemie/ImgW (10).webp'
-import imgProduct3 from '../assets/images/Produkty chemie/ImgW (6).webp'
-import imgProduct4 from '../assets/images/Produkty chemie/ImgW (4).webp'
-import imgProduct5 from '../assets/images/Produkty chemie/63600_meguiar-s-carpet-cloth-re-fresher-odstranovac-zapachu--vune-do-interieru-a-ozivovac-tkanin--709-ml.webp'
-
-const services = [
-  {
-    title: 'Luxování interiéru',
-    desc: 'Stejně jako exteriér, tak i interiér vozu je potřeba před začátkem detailingových prací řádně připravit. Důkladné luxování je činnost, kterou je potřeba začít. Samozřejmostí je luxování průduchů klimatizace i kufru.',
-    image: imgProduct1
-  },
-  {
-    title: 'Tepování koberců a čalouněných sedaček',
-    desc: 'Jedná se o hloubkové čištění látkových i velurových prvků interiéru. Do textilie se pod tlakem nanáší speciální kapalina, která je z vlákna vzápětí odsávána. Takto je textil vyčištěný do hloubky a přesto v něm po dokončení prací zůstává jen nízká zbytková vlhkost. K tepování je používán tepovač Kärcher 5.100.',
-    image: imgProduct2
-  },
-  {
-    title: 'Čištění a impregnace interiérových plastů',
-    desc: 'Měkčené i tvrdé plasty v interiéru je důležité nejen čistit, ale také chránit před UV zářením, aby postupně nesvětlaly a nedeformovaly se. Aplikací speciálního přípravku pro profesionální čištění interiéru v kombinaci s interiérovým detailerem Meguiar\'s řady Ultimate budou plasty ve Vašem vozu opět vypadat jako nové.',
-    image: imgProduct3
-  },
-  {
-    title: 'Čištění a impregnace kožených povrchů',
-    desc: 'Je možné čistit kůži hladkou i perforovanou. Rozdíl čištění obou typů je jak v technice, tak i množství použité čistící kapaliny. Čištění perforované kůže zabere cca dvojnásobek času. Zásadní částí péče o kůži je její vyživení. K této proceduře je používán špičkový přírodní balzám, který kůži vyživuje, chrání a zanechává ji voňavou a příjemnou na dotek.',
-    image: imgProduct4
-  },
-  {
-    title: 'Provonění interiéru, desinfekce klimatizace',
-    desc: 'Případné pachy ve voze je důležité nepřekrývat, ale likvidovat. Po detekci a odstranění zdroje zápachu je možné kontaminovaná místa ošetřit speciálním přípravkem, který pachy eliminuje a vytváří v interiéru dlouhotrvající vůni. Klimatizaci je možné rychle desinfikovat pomocí jednorázového prostředku Air Re-Fresher.',
-    image: imgProduct5
-  }
-]
-</script>
-
 <template>
   <div class="page-wrapper">
     <section class="page-hero">
@@ -75,6 +37,44 @@ const services = [
     </section>
   </div>
 </template>
+
+<script setup>
+import { RouterLink } from 'vue-router'
+
+import imgProduct1 from '../assets/images/Produkty chemie/d0 (1).webp'
+import imgProduct2 from '../assets/images/Produkty chemie/d0.jpg'
+import imgProduct3 from '../assets/images/Produkty chemie/G16216EU_2.webp'
+import imgProduct4 from '../assets/images/Produkty chemie/ImgW (8).webp'
+import imgProduct5 from '../assets/images/Produkty chemie/63600_meguiar-s-carpet-cloth-re-fresher-odstranovac-zapachu--vune-do-interieru-a-ozivovac-tkanin--709-ml.webp'
+
+const services = [
+  {
+    title: 'Luxování interiéru',
+    desc: 'Stejně jako exteriér, tak i interiér vozu je potřeba před začátkem detailingových prací řádně připravit. Důkladné luxování je činnost, kterou je potřeba začít. Samozřejmostí je luxování průduchů klimatizace i kufru.',
+    image: imgProduct1
+  },
+  {
+    title: 'Tepování koberců a čalouněných sedaček',
+    desc: 'Jedná se o hloubkové čištění látkových i velurových prvků interiéru. Do textilie se pod tlakem nanáší speciální kapalina, která je z vlákna vzápětí odsávána. Takto je textil vyčištěný do hloubky a přesto v něm po dokončení prací zůstává jen nízká zbytková vlhkost. K tepování je používán tepovač Kärcher 5.100.',
+    image: imgProduct2
+  },
+  {
+    title: 'Čištění a impregnace interiérových plastů',
+    desc: 'Měkčené i tvrdé plasty v interiéru je důležité nejen čistit, ale také chránit před UV zářením, aby postupně nesvětlaly a nedeformovaly se. Aplikací speciálního přípravku pro profesionální čištění interiéru v kombinaci s interiérovým detailerem Meguiar\'s řady Ultimate budou plasty ve Vašem vozu opět vypadat jako nové.',
+    image: imgProduct3
+  },
+  {
+    title: 'Čištění a impregnace kožených povrchů',
+    desc: 'Je možné čistit kůži hladkou i perforovanou. Rozdíl čištění obou typů je jak v technice, tak i množství použité čistící kapaliny. Čištění perforované kůže zabere cca dvojnásobek času. Zásadní částí péče o kůži je její vyživení. K této proceduře je používán špičkový přírodní balzám, který kůži vyživuje, chrání a zanechává ji voňavou a příjemnou na dotek.',
+    image: imgProduct4
+  },
+  {
+    title: 'Provonění interiéru, desinfekce klimatizace',
+    desc: 'Případné pachy ve voze je důležité nepřekrývat, ale likvidovat. Po detekci a odstranění zdroje zápachu je možné kontaminovaná místa ošetřit speciálním přípravkem, který pachy eliminuje a vytváří v interiéru dlouhotrvající vůni. Klimatizaci je možné rychle desinfikovat pomocí jednorázového prostředku Air Re-Fresher.',
+    image: imgProduct5
+  }
+]
+</script>
 
 <style scoped>
 .page-wrapper { padding-top: var(--header-height); }

@@ -1,3 +1,79 @@
+<template>
+  <div class="page-wrapper">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-label">Transparentní ceny</div>
+        <h1 class="page-hero-title">Ceník služeb</h1>
+        <p class="page-hero-sub">Ceny jsou počítány na vůz střední třídy</p>
+      </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="disclaimer-section">
+      <div class="container">
+        <div class="disclaimer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <p>
+            Ceny jsou počítány na vůz střední třídy.
+            <strong>Malé vozy – sleva 20 %.</strong>
+            <strong>Vozy vyšší třídy, SUV, MPV – příplatek 20 %.</strong>
+            Všechny ceny jsou uvedeny včetně 21 % DPH. Jsem plátce DPH.
+            Při spojení programů „komplet" — čištění a provonění klimatizace Air Re-Fresher <strong>zdarma</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages -->
+    <section class="page-section">
+      <div class="container">
+        <h2 class="section-heading">Zvýhodněné balíčky</h2>
+        <div class="packages-grid">
+          <div v-for="pkg in packages" :key="pkg.name" class="pkg-card" :class="{ highlight: pkg.highlight }">
+            <div class="pkg-header">
+              <h3>{{ pkg.name }}</h3>
+              <div class="pkg-time">{{ pkg.time }}</div>
+            </div>
+            <ul class="pkg-items">
+              <li v-for="item in pkg.items" :key="item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                {{ item }}
+              </li>
+            </ul>
+            <div class="pkg-price">{{ pkg.price }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Individual -->
+    <section class="page-section page-section-alt">
+      <div class="container">
+        <h2 class="section-heading">Jednotlivé úkony</h2>
+        <div class="price-table">
+          <div v-for="item in individual" :key="item.name" class="price-row">
+            <div class="price-name">{{ item.name }}</div>
+            <div class="price-time">{{ item.time }}</div>
+            <div class="price-val">{{ item.price }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-cta">
+      <div class="container">
+        <h2>Chcete přesnou nabídku?</h2>
+        <p>Napište mi, popište Váš vůz a zájem – připravím nabídku přímo pro Vás.</p>
+        <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat nezávazně</RouterLink>
+      </div>
+    </section>
+  </div>
+</template>
+
 <script setup>
 import { RouterLink } from 'vue-router'
 
@@ -78,82 +154,6 @@ const individual = [
   { name: 'Čištění a provonění klimatizace Air Re-Fresher', time: 'cca 20 min', price: '500 Kč' }
 ]
 </script>
-
-<template>
-  <div class="page-wrapper">
-    <section class="page-hero">
-      <div class="container">
-        <div class="page-hero-label">Transparentní ceny</div>
-        <h1 class="page-hero-title">Ceník služeb</h1>
-        <p class="page-hero-sub">Ceny jsou počítány na vůz střední třídy</p>
-      </div>
-    </section>
-
-    <!-- Disclaimer -->
-    <section class="disclaimer-section">
-      <div class="container">
-        <div class="disclaimer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          <p>
-            Ceny jsou počítány na vůz střední třídy.
-            <strong>Malé vozy – sleva 20 %.</strong>
-            <strong>Vozy vyšší třídy, SUV, MPV – příplatek 20 %.</strong>
-            Všechny ceny jsou uvedeny včetně 21 % DPH. Jsem plátce DPH.
-            Při spojení programů „komplet" — čištění a provonění klimatizace Air Re-Fresher <strong>zdarma</strong>.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Packages -->
-    <section class="page-section">
-      <div class="container">
-        <h2 class="section-heading">Zvýhodněné balíčky</h2>
-        <div class="packages-grid">
-          <div v-for="pkg in packages" :key="pkg.name" class="pkg-card" :class="{ highlight: pkg.highlight }">
-            <div class="pkg-header">
-              <h3>{{ pkg.name }}</h3>
-              <div class="pkg-time">{{ pkg.time }}</div>
-            </div>
-            <ul class="pkg-items">
-              <li v-for="item in pkg.items" :key="item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-                {{ item }}
-              </li>
-            </ul>
-            <div class="pkg-price">{{ pkg.price }}</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Individual -->
-    <section class="page-section page-section-alt">
-      <div class="container">
-        <h2 class="section-heading">Jednotlivé úkony</h2>
-        <div class="price-table">
-          <div v-for="item in individual" :key="item.name" class="price-row">
-            <div class="price-name">{{ item.name }}</div>
-            <div class="price-time">{{ item.time }}</div>
-            <div class="price-val">{{ item.price }}</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="page-cta">
-      <div class="container">
-        <h2>Chcete přesnou nabídku?</h2>
-        <p>Napište mi, popište Váš vůz a zájem – připravím nabídku přímo pro Vás.</p>
-        <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat nezávazně</RouterLink>
-      </div>
-    </section>
-  </div>
-</template>
 
 <style scoped>
 .page-wrapper { padding-top: var(--header-height); }

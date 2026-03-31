@@ -1,24 +1,3 @@
-<script setup>
-import { RouterLink, useRouter } from 'vue-router'
-import { useRoute } from 'vue-router'
-import { useI18n } from '../i18n'
-import logoImg from '../assets/images/Loga/Logo-ve-vuni_Bile.png'
-
-const { t } = useI18n()
-const router = useRouter()
-const route = useRoute()
-const currentYear = new Date().getFullYear()
-
-function goToSection(hash) {
-  if (route.path === '/') {
-    const el = document.querySelector(hash)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-  } else {
-    router.push({ path: '/', hash })
-  }
-}
-</script>
-
 <template>
   <footer class="footer">
     <div class="container">
@@ -87,6 +66,27 @@ function goToSection(hash) {
     </div>
   </footer>
 </template>
+
+<script setup>
+import { RouterLink, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
+import { useI18n } from '../i18n'
+import logoImg from '../assets/images/Loga/Logo-ve-vuni_Bile.png'
+
+const { t } = useI18n()
+const router = useRouter()
+const route = useRoute()
+const currentYear = new Date().getFullYear()
+
+function goToSection(hash) {
+  if (route.path === '/') {
+    const el = document.querySelector(hash)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  } else {
+    router.push({ path: '/', hash })
+  }
+}
+</script>
 
 <style scoped>
 .footer {

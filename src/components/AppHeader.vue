@@ -1,3 +1,76 @@
+<template>
+  <header class="header" :class="{ scrolled: headerDark, 'menu-open': isMobileMenuOpen, 'animated': allowTrans }">
+    <div class="container header-inner">
+      <a href="/" class="logo" @click.prevent="goToSection('#hero')">
+        <img :src="logoImg" alt="VeVůni" class="logo-img" />
+      </a>
+
+      <nav class="nav-desktop">
+        <button
+          v-for="link in navSections"
+          :key="link.hash"
+          class="nav-link"
+          @click="goToSection(link.hash)"
+        >
+          {{ link.label }}
+        </button>
+        <div class="nav-divider"></div>
+        <RouterLink v-for="link in pageLinks" :key="link.to" :to="link.to" class="nav-link nav-link-page">
+          {{ link.label }}
+        </RouterLink>
+        <button class="btn btn-primary btn-nav" @click="goToSection('#contact')">{{ t.nav.cta }}</button>
+        <button class="lang-switch" @click="toggleLocale" :title="locale === 'cs' ? 'Switch to English' : 'Přepnout do češtiny'">
+          {{ locale === 'cs' ? 'EN' : 'CZ' }}
+        </button>
+      </nav>
+
+      <button
+        class="hamburger"
+        :class="{ active: isMobileMenuOpen }"
+        @click="toggleMobileMenu"
+        aria-label="Menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Teleport mimo header — backdrop-filter na headeru by rozbil
+       position:fixed u nav-mobile (vytváří nový containing block) -->
+  <Teleport to="body">
+    <Transition name="slide">
+      <nav v-if="isMobileMenuOpen" class="nav-mobile">
+        <button
+          v-for="link in navSections"
+          :key="link.hash"
+          class="nav-link-mobile"
+          @click="goToSection(link.hash)"
+        >
+          {{ link.label }}
+        </button>
+        <div class="nav-mobile-divider"></div>
+        <RouterLink
+          v-for="link in pageLinks"
+          :key="link.to"
+          :to="link.to"
+          class="nav-link-mobile nav-link-mobile-page"
+          @click="closeMobileMenu"
+        >
+          {{ link.label }}
+        </RouterLink>
+        <button class="btn btn-primary" @click="goToSection('#contact')" style="margin-top: 1rem; width: 100%;">
+          {{ t.nav.cta }}
+        </button>
+        <button class="lang-switch lang-switch-mobile" @click="toggleLocale" :title="locale === 'cs' ? 'Switch to English' : 'Přepnout do češtiny'">
+          {{ locale === 'cs' ? 'EN' : 'CZ' }}
+        </button>
+      </nav>
+    </Transition>
+  </Teleport>
+</template>
+
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRouter, useRoute } from 'vue-router'
@@ -100,79 +173,6 @@ onUnmounted(() => {
   removeAfterEach()
 })
 </script>
-
-<template>
-  <header class="header" :class="{ scrolled: headerDark, 'menu-open': isMobileMenuOpen, 'animated': allowTrans }">
-    <div class="container header-inner">
-      <a href="/" class="logo" @click.prevent="goToSection('#hero')">
-        <img :src="logoImg" alt="VeVůni" class="logo-img" />
-      </a>
-
-      <nav class="nav-desktop">
-        <button
-          v-for="link in navSections"
-          :key="link.hash"
-          class="nav-link"
-          @click="goToSection(link.hash)"
-        >
-          {{ link.label }}
-        </button>
-        <div class="nav-divider"></div>
-        <RouterLink v-for="link in pageLinks" :key="link.to" :to="link.to" class="nav-link nav-link-page">
-          {{ link.label }}
-        </RouterLink>
-        <button class="btn btn-primary btn-nav" @click="goToSection('#contact')">{{ t.nav.cta }}</button>
-        <button class="lang-switch" @click="toggleLocale" :title="locale === 'cs' ? 'Switch to English' : 'Přepnout do češtiny'">
-          {{ locale === 'cs' ? 'EN' : 'CZ' }}
-        </button>
-      </nav>
-
-      <button
-        class="hamburger"
-        :class="{ active: isMobileMenuOpen }"
-        @click="toggleMobileMenu"
-        aria-label="Menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Teleport mimo header — backdrop-filter na headeru by rozbil
-       position:fixed u nav-mobile (vytváří nový containing block) -->
-  <Teleport to="body">
-    <Transition name="slide">
-      <nav v-if="isMobileMenuOpen" class="nav-mobile">
-        <button
-          v-for="link in navSections"
-          :key="link.hash"
-          class="nav-link-mobile"
-          @click="goToSection(link.hash)"
-        >
-          {{ link.label }}
-        </button>
-        <div class="nav-mobile-divider"></div>
-        <RouterLink
-          v-for="link in pageLinks"
-          :key="link.to"
-          :to="link.to"
-          class="nav-link-mobile nav-link-mobile-page"
-          @click="closeMobileMenu"
-        >
-          {{ link.label }}
-        </RouterLink>
-        <button class="btn btn-primary" @click="goToSection('#contact')" style="margin-top: 1rem; width: 100%;">
-          {{ t.nav.cta }}
-        </button>
-        <button class="lang-switch lang-switch-mobile" @click="toggleLocale" :title="locale === 'cs' ? 'Switch to English' : 'Přepnout do češtiny'">
-          {{ locale === 'cs' ? 'EN' : 'CZ' }}
-        </button>
-      </nav>
-    </Transition>
-  </Teleport>
-</template>
 
 <style scoped>
 .header {

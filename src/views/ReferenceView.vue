@@ -1,3 +1,94 @@
+<template>
+  <div class="page-wrapper">
+    <!-- Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-label">Spokojení zákazníci</div>
+        <h1 class="page-hero-title">Reference</h1>
+        <p class="page-hero-sub">Desítky realizovaných zakázek a spokojených zákazníků</p>
+      </div>
+    </section>
+
+    <!-- References grid -->
+    <section class="page-section">
+      <div class="container">
+        <div class="ref-grid">
+          <div v-for="(r, i) in allReferences" :key="i" class="ref-card" :class="{ 'has-gallery': getRefImages(r).length }">
+
+            <!-- Image gallery -->
+            <div v-if="getRefImages(r).length" class="ref-gallery">
+              <div class="ref-gallery-main" @click="openLightbox(r.imageFolder, 0, r.apiImages)">
+                <img :src="getRefImages(r)[0]" :alt="r.car" loading="lazy" />
+                <div class="ref-gallery-overlay">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                  <span>{{ getRefImages(r).length }} fotek</span>
+                </div>
+              </div>
+              <div v-if="getRefImages(r).length > 1" class="ref-gallery-thumbs">
+                <div
+                  v-for="(img, j) in getRefImages(r).slice(1, 4)"
+                  :key="j"
+                  class="ref-thumb"
+                  @click="openLightbox(r.imageFolder, j + 1, r.apiImages)"
+                >
+                  <img :src="img" :alt="r.car" loading="lazy" />
+                </div>
+                <div
+                  v-if="getRefImages(r).length > 4"
+                  class="ref-thumb ref-thumb-more"
+                  @click="openLightbox(r.imageFolder, 4, r.apiImages)"
+                >
+                  +{{ getRefImages(r).length - 4 }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Card text content -->
+            <div class="ref-car">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v9a2 2 0 01-2 2h-2"/>
+                <circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
+              </svg>
+              {{ r.car }}
+            </div>
+            <p class="ref-service">{{ r.service }}</p>
+            <blockquote v-if="r.quote" class="ref-quote">„{{ r.quote }}"</blockquote>
+            <cite v-if="r.author" class="ref-author">— {{ r.author }}</cite>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="page-cta">
+      <div class="container">
+        <h2>Buďte dalším spokojeným zákazníkem</h2>
+        <p>Nezávazná poptávka zdarma – odpovíme do 24 hodin.</p>
+        <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat služby</RouterLink>
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <Teleport to="body">
+      <Transition name="lightbox">
+        <div v-if="lightboxOpen" class="lightbox" @click.self="closeLightbox">
+          <button class="lightbox-close" @click="closeLightbox" aria-label="Zavřít">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+          <button class="lightbox-nav lightbox-prev" @click="prevImage" aria-label="Předchozí">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <img :src="lightboxImages[lightboxIndex]" :alt="lightboxCar" class="lightbox-image" />
+          <button class="lightbox-nav lightbox-next" @click="nextImage" aria-label="Další">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="lightbox-counter">{{ lightboxIndex + 1 }} / {{ lightboxImages.length }}</div>
+        </div>
+      </Transition>
+    </Teleport>
+  </div>
+</template>
+
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -218,97 +309,6 @@ function onKeydown(e) {
 
 onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 </script>
-
-<template>
-  <div class="page-wrapper">
-    <!-- Hero -->
-    <section class="page-hero">
-      <div class="container">
-        <div class="page-hero-label">Spokojení zákazníci</div>
-        <h1 class="page-hero-title">Reference</h1>
-        <p class="page-hero-sub">Desítky realizovaných zakázek a spokojených zákazníků</p>
-      </div>
-    </section>
-
-    <!-- References grid -->
-    <section class="page-section">
-      <div class="container">
-        <div class="ref-grid">
-          <div v-for="(r, i) in allReferences" :key="i" class="ref-card" :class="{ 'has-gallery': getRefImages(r).length }">
-
-            <!-- Image gallery -->
-            <div v-if="getRefImages(r).length" class="ref-gallery">
-              <div class="ref-gallery-main" @click="openLightbox(r.imageFolder, 0, r.apiImages)">
-                <img :src="getRefImages(r)[0]" :alt="r.car" loading="lazy" />
-                <div class="ref-gallery-overlay">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
-                  <span>{{ getRefImages(r).length }} fotek</span>
-                </div>
-              </div>
-              <div v-if="getRefImages(r).length > 1" class="ref-gallery-thumbs">
-                <div
-                  v-for="(img, j) in getRefImages(r).slice(1, 4)"
-                  :key="j"
-                  class="ref-thumb"
-                  @click="openLightbox(r.imageFolder, j + 1, r.apiImages)"
-                >
-                  <img :src="img" :alt="r.car" loading="lazy" />
-                </div>
-                <div
-                  v-if="getRefImages(r).length > 4"
-                  class="ref-thumb ref-thumb-more"
-                  @click="openLightbox(r.imageFolder, 4, r.apiImages)"
-                >
-                  +{{ getRefImages(r).length - 4 }}
-                </div>
-              </div>
-            </div>
-
-            <!-- Card text content -->
-            <div class="ref-car">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v9a2 2 0 01-2 2h-2"/>
-                <circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
-              </svg>
-              {{ r.car }}
-            </div>
-            <p class="ref-service">{{ r.service }}</p>
-            <blockquote v-if="r.quote" class="ref-quote">„{{ r.quote }}"</blockquote>
-            <cite v-if="r.author" class="ref-author">— {{ r.author }}</cite>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="page-cta">
-      <div class="container">
-        <h2>Buďte dalším spokojeným zákazníkem</h2>
-        <p>Nezávazná poptávka zdarma – odpovíme do 24 hodin.</p>
-        <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat služby</RouterLink>
-      </div>
-    </section>
-
-    <!-- Lightbox -->
-    <Teleport to="body">
-      <Transition name="lightbox">
-        <div v-if="lightboxOpen" class="lightbox" @click.self="closeLightbox">
-          <button class="lightbox-close" @click="closeLightbox" aria-label="Zavřít">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-          </button>
-          <button class="lightbox-nav lightbox-prev" @click="prevImage" aria-label="Předchozí">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <img :src="lightboxImages[lightboxIndex]" :alt="lightboxCar" class="lightbox-image" />
-          <button class="lightbox-nav lightbox-next" @click="nextImage" aria-label="Další">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <div class="lightbox-counter">{{ lightboxIndex + 1 }} / {{ lightboxImages.length }}</div>
-        </div>
-      </Transition>
-    </Teleport>
-  </div>
-</template>
 
 <style scoped>
 .page-wrapper {

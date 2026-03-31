@@ -1,10 +1,3 @@
-<script setup>
-import { useI18n } from '../i18n'
-import giftImg from '../assets/images/gift_voucher.jpg'
-
-const { t } = useI18n()
-</script>
-
 <template>
   <section class="section section-dark gift-section">
     <div class="container">
@@ -28,6 +21,13 @@ const { t } = useI18n()
     </div>
   </section>
 </template>
+
+<script setup>
+import { useI18n } from '../i18n'
+import giftImg from '../assets/images/gift_voucher.jpg'
+
+const { t } = useI18n()
+</script>
 
 <style scoped>
 .gift-section {

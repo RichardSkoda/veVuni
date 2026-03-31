@@ -1,76 +1,3 @@
-<script setup>
-import { ref, onMounted, computed } from 'vue'
-import { RouterLink } from 'vue-router'
-import { useI18n } from '../i18n'
-
-const { t } = useI18n()
-
-import before1 from '../assets/images/Peugeot 407/before1.jpg'
-import before2 from '../assets/images/Peugeot 407/before2.jpg'
-import before3 from '../assets/images/Peugeot 407/before3.jpg'
-import after1 from '../assets/images/Peugeot 407/after1.jpg'
-import after2 from '../assets/images/Peugeot 407/after2.jpg'
-import after3 from '../assets/images/Peugeot 407/after3.jpg'
-
-const activeTab = ref('after')
-
-const beforeImages = computed(() => [
-  { src: before1, alt: t.value.portfolio.beforeAlt + ' 1' },
-  { src: before2, alt: t.value.portfolio.beforeAlt + ' 2' },
-  { src: before3, alt: t.value.portfolio.beforeAlt + ' 3' }
-])
-
-const afterImages = computed(() => [
-  { src: after1, alt: t.value.portfolio.afterAlt + ' 1' },
-  { src: after2, alt: t.value.portfolio.afterAlt + ' 2' },
-  { src: after3, alt: t.value.portfolio.afterAlt + ' 3' }
-])
-
-const currentImages = computed(() =>
-  activeTab.value === 'before' ? beforeImages.value : afterImages.value
-)
-
-const lightboxOpen = ref(false)
-const lightboxIndex = ref(0)
-
-function openLightbox(index) {
-  lightboxIndex.value = index
-  lightboxOpen.value = true
-  document.body.style.overflow = 'hidden'
-}
-
-function closeLightbox() {
-  lightboxOpen.value = false
-  document.body.style.overflow = ''
-}
-
-function nextImage() {
-  lightboxIndex.value = (lightboxIndex.value + 1) % currentImages.value.length
-}
-
-function prevImage() {
-  lightboxIndex.value = (lightboxIndex.value - 1 + currentImages.value.length) % currentImages.value.length
-}
-
-const sectionRef = ref(null)
-const isVisible = ref(false)
-
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        isVisible.value = true
-        observer.disconnect()
-      }
-    },
-    { threshold: 0.1 }
-  )
-  if (sectionRef.value) {
-    observer.observe(sectionRef.value)
-  }
-})
-</script>
-
 <template>
   <section id="portfolio" class="section" ref="sectionRef">
     <div class="container">
@@ -146,6 +73,79 @@ onMounted(() => {
     </Teleport>
   </section>
 </template>
+
+<script setup>
+import { ref, onMounted, computed } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
+
+import before1 from '../assets/images/Peugeot 407/before1.jpg'
+import before2 from '../assets/images/Peugeot 407/before2.jpg'
+import before3 from '../assets/images/Peugeot 407/before3.jpg'
+import after1 from '../assets/images/Peugeot 407/after1.jpg'
+import after2 from '../assets/images/Peugeot 407/after2.jpg'
+import after3 from '../assets/images/Peugeot 407/after3.jpg'
+
+const activeTab = ref('after')
+
+const beforeImages = computed(() => [
+  { src: before1, alt: t.value.portfolio.beforeAlt + ' 1' },
+  { src: before2, alt: t.value.portfolio.beforeAlt + ' 2' },
+  { src: before3, alt: t.value.portfolio.beforeAlt + ' 3' }
+])
+
+const afterImages = computed(() => [
+  { src: after1, alt: t.value.portfolio.afterAlt + ' 1' },
+  { src: after2, alt: t.value.portfolio.afterAlt + ' 2' },
+  { src: after3, alt: t.value.portfolio.afterAlt + ' 3' }
+])
+
+const currentImages = computed(() =>
+  activeTab.value === 'before' ? beforeImages.value : afterImages.value
+)
+
+const lightboxOpen = ref(false)
+const lightboxIndex = ref(0)
+
+function openLightbox(index) {
+  lightboxIndex.value = index
+  lightboxOpen.value = true
+  document.body.style.overflow = 'hidden'
+}
+
+function closeLightbox() {
+  lightboxOpen.value = false
+  document.body.style.overflow = ''
+}
+
+function nextImage() {
+  lightboxIndex.value = (lightboxIndex.value + 1) % currentImages.value.length
+}
+
+function prevImage() {
+  lightboxIndex.value = (lightboxIndex.value - 1 + currentImages.value.length) % currentImages.value.length
+}
+
+const sectionRef = ref(null)
+const isVisible = ref(false)
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        isVisible.value = true
+        observer.disconnect()
+      }
+    },
+    { threshold: 0.1 }
+  )
+  if (sectionRef.value) {
+    observer.observe(sectionRef.value)
+  }
+})
+</script>
 
 <style scoped>
 .tabs {

@@ -1,3 +1,32 @@
+<template>
+  <section id="services" class="section section-light" ref="sectionRef">
+    <div class="container">
+      <h2 class="section-title">{{ t.services.title }}</h2>
+      <p class="section-subtitle">{{ t.services.subtitle }}</p>
+
+      <div class="services-grid">
+        <div
+          v-for="(service, index) in services"
+          :key="index"
+          class="service-card"
+          :class="{ visible: isVisible }"
+          :style="{ transitionDelay: (index * 0.15) + 's' }"
+        >
+          <div class="service-icon" v-html="service.icon"></div>
+          <h3 class="service-title">{{ service.title }}</h3>
+          <p class="service-desc">{{ service.description }}</p>
+          <ul class="service-features">
+            <li v-for="feature in service.features" :key="feature">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from '../i18n'
@@ -43,35 +72,6 @@ onMounted(() => {
   }
 })
 </script>
-
-<template>
-  <section id="services" class="section section-light" ref="sectionRef">
-    <div class="container">
-      <h2 class="section-title">{{ t.services.title }}</h2>
-      <p class="section-subtitle">{{ t.services.subtitle }}</p>
-
-      <div class="services-grid">
-        <div
-          v-for="(service, index) in services"
-          :key="index"
-          class="service-card"
-          :class="{ visible: isVisible }"
-          :style="{ transitionDelay: (index * 0.15) + 's' }"
-        >
-          <div class="service-icon" v-html="service.icon"></div>
-          <h3 class="service-title">{{ service.title }}</h3>
-          <p class="service-desc">{{ service.description }}</p>
-          <ul class="service-features">
-            <li v-for="feature in service.features" :key="feature">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              {{ feature }}
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-</template>
 
 <style scoped>
 .services-grid {

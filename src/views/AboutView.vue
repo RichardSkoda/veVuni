@@ -1,9 +1,3 @@
-<script setup>
-import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
-import certImg from '../assets/images/M.webp'
-</script>
-
 <template>
   <div class="page-wrapper">
     <!-- Hero -->
@@ -121,6 +115,12 @@ import certImg from '../assets/images/M.webp'
     </section>
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { RouterLink } from 'vue-router'
+import certImg from '../assets/images/M.webp'
+</script>
 
 <style scoped>
 .page-wrapper {

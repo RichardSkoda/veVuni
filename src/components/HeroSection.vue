@@ -1,18 +1,3 @@
-<script setup>
-import { useI18n } from '../i18n'
-import heroBg from '../assets/images/main_jag.webp'
-
-const { t } = useI18n()
-
-const scrollToContact = () => {
-  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-}
-
-const scrollToServices = () => {
-  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })
-}
-</script>
-
 <template>
   <section id="hero" class="hero">
     <div class="hero-bg" :style="{ backgroundImage: `url(${heroBg})` }"></div>
@@ -62,6 +47,21 @@ const scrollToServices = () => {
   </section>
 </template>
 
+<script setup>
+import { useI18n } from '../i18n'
+import heroBg from '../assets/images/main_jag.webp'
+
+const { t } = useI18n()
+
+const scrollToContact = () => {
+  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+}
+
+const scrollToServices = () => {
+  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })
+}
+</script>
+
 <style scoped>
 .hero {
   position: relative;
@@ -81,13 +81,13 @@ const scrollToServices = () => {
   z-index: 0;
 }
 
-/* Gradient overlay – solid dark on the right, fading to transparent on the left */
+/* Gradient overlay – solid dark on the left, fading to transparent on the right */
 .hero-overlay {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(
-      to left,
+      to right,
       rgba(11, 15, 20, 0.92) 0%,
       rgba(11, 15, 20, 0.85) 30%,
       rgba(11, 15, 20, 0.55) 55%,
@@ -102,7 +102,7 @@ const scrollToServices = () => {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 85% 60%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 15% 60%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -148,7 +148,6 @@ const scrollToServices = () => {
   padding-top: calc(var(--header-height) + 3rem);
   padding-bottom: 4rem;
   display: flex;
-  justify-content: flex-end;
 }
 
 .hero-text {

@@ -1,3 +1,130 @@
+<template>
+  <div class="admin-wrapper">
+    <!-- Login gate -->
+    <div v-if="!authenticated" class="admin-login">
+      <div class="admin-login-card">
+        <div class="admin-logo">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+        </div>
+        <h1>Administrace</h1>
+        <p>Zadejte heslo pro přístup</p>
+        <form @submit.prevent="login">
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Heslo"
+            class="admin-input"
+            autocomplete="current-password"
+          />
+          <p v-if="authError" class="admin-error">{{ authError }}</p>
+          <button type="submit" class="btn btn-primary btn-full">Přihlásit</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Admin panel -->
+    <div v-else class="admin-panel">
+      <div class="container">
+        <div class="admin-header">
+          <h1>Správa referencí</h1>
+          <button class="btn btn-outline-sm" @click="authenticated = false; password = ''">Odhlásit</button>
+        </div>
+
+        <!-- Add new reference form -->
+        <div class="admin-form-card">
+          <h2>Přidat novou referenci</h2>
+
+          <div v-if="submitResult" class="admin-alert" :class="submitResult.type">
+            {{ submitResult.message }}
+          </div>
+
+          <form @submit.prevent="submit" class="admin-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Název vozu *</label>
+                <input v-model="car" type="text" class="admin-input" placeholder="např. Škoda Octavia RS" />
+              </div>
+              <div class="form-group">
+                <label>Jméno zákazníka</label>
+                <input v-model="author" type="text" class="admin-input" placeholder="např. Jan N." />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Provedené práce *</label>
+              <input v-model="service" type="text" class="admin-input" placeholder="např. Kompletní exteriér a interiér" />
+            </div>
+
+            <div class="form-group">
+              <label>Recenze zákazníka</label>
+              <textarea v-model="quote" class="admin-input admin-textarea" rows="3" placeholder="Volitelná citace od zákazníka..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Fotky (max 20)</label>
+              <div class="file-upload-area" @click="$refs.fileInput.click()" @dragover.prevent @drop.prevent="onFileChange({ target: { files: $event.dataTransfer.files } })">
+                <input ref="fileInput" type="file" multiple accept="image/jpeg,image/png,image/webp" @change="onFileChange" class="file-input-hidden" />
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span v-if="!files.length">Klikněte nebo přetáhněte fotky</span>
+                <span v-else>{{ files.length }} {{ files.length === 1 ? 'soubor' : files.length < 5 ? 'soubory' : 'souborů' }} vybráno</span>
+              </div>
+
+              <!-- Previews -->
+              <div v-if="previews.length" class="photo-previews">
+                <div v-for="(p, i) in previews" :key="i" class="photo-preview">
+                  <img :src="p.url" :alt="p.name" />
+                  <button type="button" class="preview-remove" @click="removePreview(i)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" :disabled="!canSubmit || submitting">
+              {{ submitting ? 'Ukládám...' : 'Přidat referenci' }}
+            </button>
+          </form>
+        </div>
+
+        <!-- Existing dynamic references -->
+        <div class="admin-list-card">
+          <h2>Přidané reference ({{ existingRefs.length }})</h2>
+          <p v-if="loadingRefs" class="admin-loading">Načítám...</p>
+          <p v-else-if="!existingRefs.length" class="admin-empty">Zatím žádné přidané reference.</p>
+
+          <div v-else class="admin-ref-list">
+            <div v-for="r in existingRefs" :key="r.id" class="admin-ref-item">
+              <div class="admin-ref-thumbs" v-if="r.images && r.images.length">
+                <img v-for="(img, j) in r.images.slice(0, 3)" :key="j" :src="img" :alt="r.car" />
+                <span v-if="r.images.length > 3" class="admin-ref-more">+{{ r.images.length - 3 }}</span>
+              </div>
+              <div class="admin-ref-info">
+                <strong>{{ r.car }}</strong>
+                <span class="admin-ref-service">{{ r.service }}</span>
+                <span v-if="r.quote" class="admin-ref-quote">„{{ r.quote }}"</span>
+                <small v-if="r.author">— {{ r.author }}</small>
+              </div>
+              <button class="btn-delete" @click="deleteRef(r.id)" :disabled="deletingId === r.id">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, computed } from 'vue'
 
@@ -147,133 +274,6 @@ async function deleteRef(id) {
   }
 }
 </script>
-
-<template>
-  <div class="admin-wrapper">
-    <!-- Login gate -->
-    <div v-if="!authenticated" class="admin-login">
-      <div class="admin-login-card">
-        <div class="admin-logo">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-            <path d="M7 11V7a5 5 0 0110 0v4"/>
-          </svg>
-        </div>
-        <h1>Administrace</h1>
-        <p>Zadejte heslo pro přístup</p>
-        <form @submit.prevent="login">
-          <input
-            v-model="password"
-            type="password"
-            placeholder="Heslo"
-            class="admin-input"
-            autocomplete="current-password"
-          />
-          <p v-if="authError" class="admin-error">{{ authError }}</p>
-          <button type="submit" class="btn btn-primary btn-full">Přihlásit</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Admin panel -->
-    <div v-else class="admin-panel">
-      <div class="container">
-        <div class="admin-header">
-          <h1>Správa referencí</h1>
-          <button class="btn btn-outline-sm" @click="authenticated = false; password = ''">Odhlásit</button>
-        </div>
-
-        <!-- Add new reference form -->
-        <div class="admin-form-card">
-          <h2>Přidat novou referenci</h2>
-
-          <div v-if="submitResult" class="admin-alert" :class="submitResult.type">
-            {{ submitResult.message }}
-          </div>
-
-          <form @submit.prevent="submit" class="admin-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Název vozu *</label>
-                <input v-model="car" type="text" class="admin-input" placeholder="např. Škoda Octavia RS" />
-              </div>
-              <div class="form-group">
-                <label>Jméno zákazníka</label>
-                <input v-model="author" type="text" class="admin-input" placeholder="např. Jan N." />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Provedené práce *</label>
-              <input v-model="service" type="text" class="admin-input" placeholder="např. Kompletní exteriér a interiér" />
-            </div>
-
-            <div class="form-group">
-              <label>Recenze zákazníka</label>
-              <textarea v-model="quote" class="admin-input admin-textarea" rows="3" placeholder="Volitelná citace od zákazníka..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Fotky (max 20)</label>
-              <div class="file-upload-area" @click="$refs.fileInput.click()" @dragover.prevent @drop.prevent="onFileChange({ target: { files: $event.dataTransfer.files } })">
-                <input ref="fileInput" type="file" multiple accept="image/jpeg,image/png,image/webp" @change="onFileChange" class="file-input-hidden" />
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                  <polyline points="17 8 12 3 7 8"/>
-                  <line x1="12" y1="3" x2="12" y2="15"/>
-                </svg>
-                <span v-if="!files.length">Klikněte nebo přetáhněte fotky</span>
-                <span v-else>{{ files.length }} {{ files.length === 1 ? 'soubor' : files.length < 5 ? 'soubory' : 'souborů' }} vybráno</span>
-              </div>
-
-              <!-- Previews -->
-              <div v-if="previews.length" class="photo-previews">
-                <div v-for="(p, i) in previews" :key="i" class="photo-preview">
-                  <img :src="p.url" :alt="p.name" />
-                  <button type="button" class="preview-remove" @click="removePreview(i)">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary" :disabled="!canSubmit || submitting">
-              {{ submitting ? 'Ukládám...' : 'Přidat referenci' }}
-            </button>
-          </form>
-        </div>
-
-        <!-- Existing dynamic references -->
-        <div class="admin-list-card">
-          <h2>Přidané reference ({{ existingRefs.length }})</h2>
-          <p v-if="loadingRefs" class="admin-loading">Načítám...</p>
-          <p v-else-if="!existingRefs.length" class="admin-empty">Zatím žádné přidané reference.</p>
-
-          <div v-else class="admin-ref-list">
-            <div v-for="r in existingRefs" :key="r.id" class="admin-ref-item">
-              <div class="admin-ref-thumbs" v-if="r.images && r.images.length">
-                <img v-for="(img, j) in r.images.slice(0, 3)" :key="j" :src="img" :alt="r.car" />
-                <span v-if="r.images.length > 3" class="admin-ref-more">+{{ r.images.length - 3 }}</span>
-              </div>
-              <div class="admin-ref-info">
-                <strong>{{ r.car }}</strong>
-                <span class="admin-ref-service">{{ r.service }}</span>
-                <span v-if="r.quote" class="admin-ref-quote">„{{ r.quote }}"</span>
-                <small v-if="r.author">— {{ r.author }}</small>
-              </div>
-              <button class="btn-delete" @click="deleteRef(r.id)" :disabled="deletingId === r.id">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="3 6 5 6 21 6"/>
-                  <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .admin-wrapper {
