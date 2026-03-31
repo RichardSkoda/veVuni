@@ -3,9 +3,9 @@
     <!-- Hero -->
     <section class="page-hero">
       <div class="container">
-        <div class="page-hero-label">O nás</div>
-        <h1 class="page-hero-title">Kompletní péče o exteriér<br>a interiér Vašeho vozu</h1>
-        <p class="page-hero-sub">Ing. Michal Tauchman – certifikovaný detailer Meguiar's</p>
+        <div class="page-hero-label">{{ t.about.heroLabel }}</div>
+        <h1 class="page-hero-title" v-html="t.about.heroTitle.replace('\n', '<br>')"></h1>
+        <p class="page-hero-sub">{{ t.about.heroSub }}</p>
       </div>
     </section>
 
@@ -14,23 +14,15 @@
       <div class="container">
         <div class="story-grid">
           <div class="story-content">
-            <span class="section-eyebrow">Příběh</span>
-            <h2>Jak to začalo</h2>
-            <p>
-              Jako většina dobrých podnikatelských nápadů vše vzešlo z mé vlastní potřeby pravidelně ošetřovat
-              dva vozy naší rodiny. Postupně jsem testoval různé přípravky i techniky jejich nanášení, sledoval
-              instruktážní videa zabývající se touto problematikou a dokupoval nutné vybavení.
-            </p>
-            <p>
-              Když už jsem si byl v postupech dostatečně jistý, nabídl jsem detailingové služby svým kamarádům
-              a širší rodině. V roce 2019 jsem absolvoval certifikované detailingové školení společnosti Meguiar's
-              a spustil svůj projekt <strong>„VeVůni"</strong>, kde nabízím kompletní služby detailingové péče o vůz i Vám.
-            </p>
+            <span class="section-eyebrow">{{ t.about.storyEyebrow }}</span>
+            <h2>{{ t.about.storyTitle }}</h2>
+            <p>{{ t.about.storyP1 }}</p>
+            <p v-html="t.about.storyP2"></p>
           </div>
           <div class="story-quote">
             <blockquote>
-              „Vzhled Vašeho vozu je Vaší vizitkou."
-              <cite>Ing. Michal Tauchman</cite>
+              {{ t.about.quote }}
+              <cite>{{ t.about.quoteAuthor }}</cite>
             </blockquote>
           </div>
         </div>
@@ -47,12 +39,8 @@
                 <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
               </svg>
             </div>
-            <h3>Spolehlivě a rychle</h3>
-            <p>
-              Cílem je poskytnout Vám důkladnou péči o Váš vůz, aniž byste museli být omezeni odložením vozu
-              na několik dní do detailingového studia. Všechny nabízené úkony je možné stihnout vždy v jednom dni.
-              Práce menšího rozsahu je možné plánovat na odpoledne nebo večer po Vašem příchodu z práce.
-            </p>
+            <h3>{{ t.about.feature1Title }}</h3>
+            <p>{{ t.about.feature1Text }}</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon">
@@ -60,12 +48,8 @@
                 <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
               </svg>
             </div>
-            <h3>U Vás doma</h3>
-            <p>
-              Vůz je možné vyzvednout u Vás doma a po dokončení prací Vám ho opět domů dovézt. Nemusíte nikam
-              jezdit, nic organizovat. Kvalitním ošetřením vozu si uděláte nejen radost, ale také prodloužíte
-              životnost ošetřených částí a zvýšíte zůstatkovou hodnotu vozu.
-            </p>
+            <h3>{{ t.about.feature2Title }}</h3>
+            <p>{{ t.about.feature2Text }}</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon">
@@ -74,12 +58,8 @@
                 <path d="M12 13v3"/><circle cx="12" cy="13" r="1"/>
               </svg>
             </div>
-            <h3>Praktický dárek</h3>
-            <p>
-              Pokud budete chtít věnovat detailingové služby jako dárek — k narozeninám, výročí nebo jen tak
-              pro radost — vystavím Vám dárkový certifikát na konkrétní službu, případně celkovou hodnotu.
-              Dárek, který opravdu potěší.
-            </p>
+            <h3>{{ t.about.feature3Title }}</h3>
+            <p>{{ t.about.feature3Text }}</p>
           </div>
         </div>
       </div>
@@ -90,16 +70,12 @@
       <div class="container">
         <div class="training-box">
           <div class="training-text">
-            <span class="section-eyebrow">Certifikace</span>
-            <h2>Je skvělé mít možnost učit se od těch nejlepších</h2>
-            <p>
-              V roce 2019 jsem absolvoval <strong>certifikované detailingové školení Meguiar's Individual Detailing Class</strong>.
-              K péči o exteriér i interiér vozů je používána výhradně americká prémiová kosmetika Meguiar's řady Ultimate —
-              ověřené produkty, které jsou standardem mezi profesionálními detailery po celém světě.
-            </p>
+            <span class="section-eyebrow">{{ t.about.certEyebrow }}</span>
+            <h2>{{ t.about.certTitle }}</h2>
+            <p v-html="t.about.certText"></p>
           </div>
           <div class="training-badge">
-            <img :src="certImg" alt="Certifikované školení Meguiar's" class="training-photo" />
+            <img :src="certImg" :alt="t.about.certImgAlt" class="training-photo" />
           </div>
         </div>
       </div>
@@ -108,9 +84,9 @@
     <!-- CTA -->
     <section class="page-cta">
       <div class="container">
-        <h2>Připraveni svěřit nám Váš vůz?</h2>
-        <p>Nezávazná poptávka zdarma – odpovíme do 24 hodin.</p>
-        <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat služby</RouterLink>
+        <h2>{{ t.about.ctaTitle }}</h2>
+        <p>{{ t.about.ctaText }}</p>
+        <RouterLink to="/#contact" class="btn btn-primary btn-lg">{{ t.about.ctaBtn }}</RouterLink>
       </div>
     </section>
   </div>
@@ -119,7 +95,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from '../i18n'
 import certImg from '../assets/images/M.webp'
+
+const { t } = useI18n()
 </script>
 
 <style scoped>

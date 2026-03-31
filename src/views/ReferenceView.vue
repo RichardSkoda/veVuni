@@ -3,9 +3,9 @@
     <!-- Hero -->
     <section class="page-hero">
       <div class="container">
-        <div class="page-hero-label">Spokojení zákazníci</div>
-        <h1 class="page-hero-title">Reference</h1>
-        <p class="page-hero-sub">Desítky realizovaných zakázek a spokojených zákazníků</p>
+        <div class="page-hero-label">{{ t.reference.heroLabel }}</div>
+        <h1 class="page-hero-title">{{ t.reference.heroTitle }}</h1>
+        <p class="page-hero-sub">{{ t.reference.heroSub }}</p>
       </div>
     </section>
 
@@ -21,7 +21,7 @@
                 <img :src="getRefImages(r)[0]" :alt="r.car" loading="lazy" />
                 <div class="ref-gallery-overlay">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
-                  <span>{{ getRefImages(r).length }} fotek</span>
+                  <span>{{ getRefImages(r).length }} {{ t.reference.photosCount }}</span>
                 </div>
               </div>
               <div v-if="getRefImages(r).length > 1" class="ref-gallery-thumbs">
@@ -62,9 +62,9 @@
     <!-- CTA -->
     <section class="page-cta">
       <div class="container">
-        <h2>Buďte dalším spokojeným zákazníkem</h2>
-        <p>Nezávazná poptávka zdarma – odpovíme do 24 hodin.</p>
-        <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat služby</RouterLink>
+        <h2>{{ t.reference.ctaTitle }}</h2>
+        <p>{{ t.reference.ctaText }}</p>
+        <RouterLink to="/#contact" class="btn btn-primary btn-lg">{{ t.reference.ctaBtn }}</RouterLink>
       </div>
     </section>
 
@@ -72,14 +72,14 @@
     <Teleport to="body">
       <Transition name="lightbox">
         <div v-if="lightboxOpen" class="lightbox" @click.self="closeLightbox">
-          <button class="lightbox-close" @click="closeLightbox" aria-label="Zavřít">
+          <button class="lightbox-close" @click="closeLightbox" :aria-label="t.reference.closeLabel">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
-          <button class="lightbox-nav lightbox-prev" @click="prevImage" aria-label="Předchozí">
+          <button class="lightbox-nav lightbox-prev" @click="prevImage" :aria-label="t.portfolio.prevLabel">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
           <img :src="lightboxImages[lightboxIndex]" :alt="lightboxCar" class="lightbox-image" />
-          <button class="lightbox-nav lightbox-next" @click="nextImage" aria-label="Další">
+          <button class="lightbox-nav lightbox-next" @click="nextImage" :aria-label="t.portfolio.nextLabel">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
           <div class="lightbox-counter">{{ lightboxIndex + 1 }} / {{ lightboxImages.length }}</div>
@@ -92,6 +92,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
 
 // Load all images from car subfolders
 const imageModules = import.meta.glob(
@@ -131,112 +134,10 @@ function getImages(folder) {
   return folder ? (carImages[folder] || []) : []
 }
 
-const references = [
-  {
-    car: 'Volvo V90',
-    imageFolder: 'Volvo V90',
-    service: 'Dočištění exteriéru, voskování, leštění oken + „tekuté stěrače"',
-    quote: 'Děkuji, na jaře se zase ozvu.',
-    author: 'David F.'
-  },
-  {
-    car: 'Volvo XC60',
-    imageFolder: 'Volvo XC60',
-    service: 'Dočištění, voskování, vyživení nelakovaných plastů, „tekuté stěrače"',
-    quote: 'Vypadá to skvěle a prokouklo to fest.',
-    author: 'Dominik K.'
-  },
-  {
-    car: 'Audi Q7',
-    imageFolder: 'Audi Q7',
-    service: 'Ruční mytí, dekontaminace, voskování',
-    quote: 'Děkuji za super službu a super přístup.',
-    author: 'Tomáš R.'
-  },
-  {
-    car: 'Škoda Felicia',
-    imageFolder: 'Škoda Felicia',
-    service: 'Program Exteriér komplet',
-    quote: 'Jako když vyjela z Mototechny. To jsem měl nechat udělat už dávno.',
-    author: 'Milan T.'
-  },
-  {
-    car: 'BMW 535i',
-    imageFolder: 'BMW 5',
-    service: 'Ruční mytí, dekontaminace, leštění a voskování + balíček Interiér komplet',
-    quote: 'Děkuji, myslím, že spolupráce bude pokračovat, kolegové již obdivovali Vaší práci.',
-    author: 'Vít M.'
-  },
-  {
-    car: 'Škoda Octavia RS',
-    imageFolder: 'Škoda Octavia',
-    service: 'Balíček Exteriér komplet + Interiér základ',
-    quote: 'Díky, takhle jsem si výsledek představoval. Jsem spokojený.',
-    author: 'Tomáš R.'
-  },
-  {
-    car: 'Jaguar XF',
-    imageFolder: 'Jaguar XF',
-    service: 'Kompletní exteriér a interiér – leštění, voskování, tepování',
-    quote: null,
-    author: null
-  },
-  {
-    car: 'VW Passat',
-    imageFolder: 'VW Passat',
-    service: 'Kompletní exteriér – ruční mytí, dekontaminace, leštění a voskování',
-    quote: null,
-    author: null
-  },
-  {
-    car: 'Peugeot 407',
-    imageFolder: 'Peugeot 407',
-    service: 'Dekontaminace, leštění a ochrana laku + tepování a čištění interiéru',
-    quote: 'Skvěle odvedená práce se zaměřením na detail. Perfektně umyté auto zvenku i zevnitř, provoněné, naleštěné. Myslím, že takto vyblýskané auto nebylo ani při koupi.',
-    author: 'Jana M.'
-  },
-  {
-    car: 'Škoda Fabia',
-    imageFolder: 'Škoda Fabia',
-    service: 'Ruční čištění exteriéru a interiéru, voskování',
-    quote: 'Perfektně odvedená práce. Vše bylo pečlivě umyté, jak uvnitř, tak zvenku. Auto krásně vonělo, bylo vyblýskané.',
-    author: 'Hana J.'
-  },
-  {
-    car: 'Škoda Superb',
-    imageFolder: 'Škoda Superb',
-    service: 'Ruční čištění exteriéru a interiéru, odstranění kontaminantů a mírných defektů laku',
-    quote: '... ty jsi ďábel, takhle čisté bylo naposledy v autosalonu...',
-    author: 'Tomáš K.'
-  },
-  {
-    car: 'Toyota Auris',
-    imageFolder: 'Toyota Auris',
-    service: 'Balíčky Exteriér základ + Interiér základ',
-    quote: 'Je to krása, teď to bude úplně jiná jízda.',
-    author: 'Kamila M.'
-  },
-  {
-    car: 'Rover 75',
-    imageFolder: 'Rover 75',
-    service: 'Balíček Interiér komplet',
-    quote: 'Indeed, I am really satisfied with the service. The car is much more comfortable inside now. Also it\'s looking amazing compare to how it was before.',
-    author: 'Salomon C.'
-  },
-  {
-    car: 'Audi A3',
-    imageFolder: 'Audi A3',
-    service: 'Ruční mytí, dekontaminace laku, voskování',
-    quote: 'Krásné, děkuji.',
-    author: 'Jan S.'
-  },
-  {
-    car: 'Mazda 5',
-    imageFolder: 'Mazda5',
-    service: 'Renovace světlometů',
-    quote: 'Super, jako nové!',
-    author: 'Richard Š.'
-  }
+const imageFolders = [
+  'Volvo V90', 'Volvo XC60', 'Audi Q7', 'Škoda Felicia', 'BMW 5',
+  'Škoda Octavia', 'Jaguar XF', 'VW Passat', 'Peugeot 407', 'Škoda Fabia',
+  'Škoda Superb', 'Toyota Auris', 'Rover 75', 'Audi A3', 'Mazda5'
 ]
 
 // Lightbox state
@@ -258,7 +159,11 @@ const allReferences = computed(() => {
     author: r.author || null,
     apiImages: r.images || []
   }))
-  return [...dynamic, ...references]
+  const staticRefs = t.value.reference.references.map((r, i) => ({
+    ...r,
+    imageFolder: imageFolders[i] || null
+  }))
+  return [...dynamic, ...staticRefs]
 })
 
 onMounted(() => {

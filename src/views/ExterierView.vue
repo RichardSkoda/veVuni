@@ -2,9 +2,9 @@
   <div class="page-wrapper">
     <section class="page-hero">
       <div class="container">
-        <div class="page-hero-label">Péče o vůz</div>
-        <h1 class="page-hero-title">Exteriér</h1>
-        <p class="page-hero-sub">Komplexní péče o lak, disky, světlomety a skla Vašeho vozu</p>
+        <div class="page-hero-label">{{ t.exterier.heroLabel }}</div>
+        <h1 class="page-hero-title">{{ t.exterier.heroTitle }}</h1>
+        <p class="page-hero-sub">{{ t.exterier.heroSub }}</p>
       </div>
     </section>
 
@@ -14,11 +14,11 @@
           <div v-for="(svc, i) in services" :key="i" class="svc-card">
             <div class="svc-number">{{ String(i + 1).padStart(2, '0') }}</div>
             <div class="svc-body">
-              <h3>{{ svc.title }}</h3>
-              <p>{{ svc.desc }}</p>
+              <h3>{{ t.exterier.services[i].title }}</h3>
+              <p>{{ t.exterier.services[i].desc }}</p>
             </div>
             <div v-if="svc.image" class="svc-product">
-              <img :src="svc.image" :alt="svc.title" loading="lazy" />
+              <img :src="svc.image" :alt="t.exterier.services[i].title" loading="lazy" />
             </div>
           </div>
         </div>
@@ -27,11 +27,11 @@
 
     <section class="page-cta">
       <div class="container">
-        <h2>Zajímá vás konkrétní služba?</h2>
-        <p>Sestavíme Vám cenovou nabídku přímo na míru.</p>
+        <h2>{{ t.exterier.ctaTitle }}</h2>
+        <p>{{ t.exterier.ctaText }}</p>
         <div class="cta-btns">
-          <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat nezávazně</RouterLink>
-          <RouterLink to="/cenik" class="btn btn-outline btn-lg">Zobrazit ceník</RouterLink>
+          <RouterLink to="/#contact" class="btn btn-primary btn-lg">{{ t.exterier.ctaBtn1 }}</RouterLink>
+          <RouterLink to="/cenik" class="btn btn-outline btn-lg">{{ t.exterier.ctaBtn2 }}</RouterLink>
         </div>
       </div>
     </section>
@@ -40,6 +40,9 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
 
 import imgProduct1 from '../assets/images/Produkty chemie/ImgW.webp'
 import imgProduct2 from '../assets/images/Produkty chemie/ImgW (1).webp'
@@ -53,56 +56,16 @@ import imgProduct9 from '../assets/images/Produkty chemie/ImgW (10).webp'
 import imgProduct10 from '../assets/images/Produkty chemie/g8504-meguiars-perfect-clarity-glass-sealant.jpg'
 
 const services = [
-  {
-    title: 'Detailní čištění laku',
-    desc: 'Před samotným procesem péče o lak je nutné jeho důkladné vyčištění. Kvalitní automatická či ruční myčka jsou dobrý začátek, nicméně hůře přístupná místa vozu je potřeba dočistit ručně. Nestihli jste svůj vůz před detailingem omýt? Nevadí, rád s Vaším vozem do myčky zajedu.',
-    image: imgProduct1
-  },
-  {
-    title: 'Dekontaminace laku – Clay',
-    desc: 'Jakmile je lak na pohled čistý, je možné přistoupit k jeho dekontaminaci od nečistot, se kterými si běžná mycí technika neporadí (asfalt, rez, pryskyřice, hmyz…). K tomuto účelu se využívá tzv. Clay, který tyto nečistoty šetrně a přesto důkladně odstraňuje.',
-    image: imgProduct2
-  },
-  {
-    title: 'Leštění laku – Compound',
-    desc: 'Je lak Vašeho vozu mírně až středně zašlý, obsahuje škrábance, oxidaci, hologramy a další poškození? Pak je ideální čas použít leštěnku s mikroabrazivním složením a velmi šetrně za pomocí strojní leštičky lak rozleštit. Směs leštících olejů lak navíc rozzáří a vyhladí.',
-    image: imgProduct3
-  },
-  {
-    title: 'Leštění laku – Polish',
-    desc: 'Je lak Vašeho vozu stále jako nový? Byste rádi laku dodali lesk, hloubku a sytost barev? Pak je skvělou volbou použití neabrazivní leštěnky se směsí leštících olejů. Neabrazivní leštěnku je možné použít i jako druhý krok po leštění compoundem.',
-    image: imgProduct4
-  },
-  {
-    title: 'Voskování laku – syntetický vosk',
-    desc: 'Voskování je posledním krokem v komplexní péči o lak. Špičkový vosk na bázi syntetických polymerů podpoří lesk a hloubku laku a především poskytne karoserii neviditelnou ochranu na několik měsíců. Vosk také výborně odpuzuje vodu – nečistoty na laku hůře ulpívají a čištění je snazší.',
-    image: imgProduct5
-  },
-  {
-    title: 'Ošetření disků a pneumatik',
-    desc: 'Kola dělají auto, říká se. Jejich čistota a správná ochrana je neméně důležitá jako u zbylých částí vozu. Speciální přípravek z kol důkladně očistí brzdový prach či silniční nečistoty a zanechá je dokonale čistá pro případné další ošetření.',
-    image: imgProduct6
-  },
-  {
-    title: 'Odstranění lokálních defektů laku',
-    desc: 'Pokud poškození laku zasahuje pouze do vrchní čiré vrstvy, je možné lokální škrábance a oděrky rozleštit speciálním přípravkem na lokální opravy. Opravy mírných poškození lze provádět lokálně, šetrně a bezpečně.',
-    image: imgProduct7
-  },
-  {
-    title: 'Oživení a ochrana nelakovaných plastů',
-    desc: 'Blatníky, difuzory, lemy oken a další exteriérové části bývají vyvedeny v nelakovaném černém plastu. Postupem času ztrácí barvu a šednou. Aplikací vhodného prostředku dílům vrátíme jejich původní vzhled a ochráníme je proti UV záření.',
-    image: imgProduct8
-  },
-  {
-    title: 'Renovace světlometů',
-    desc: 'Vypadají Vaše světlomety spíše jako mlhomety? S použitím správného přípravku je možné zmírnit jejich zažloutnutí, stopy oxidace a poškrábání. Dobře vidět a být viděn – jedno z hlavních pravidel v silničním provozu.',
-    image: imgProduct9
-  },
-  {
-    title: 'Leštění oken, zrcátek a nanášení tekutých stěračů',
-    desc: 'Dobrý výhled z vozu je základní předpoklad bezpečné a spokojené jízdy. Aplikací „tekutých stěračů" nebudete muset v rychlostech nad 80 km/h běžné stěrače vůbec používat. Na skle se vytvoří ochranný nanopovlak s výbornými hydrofobními účinky.',
-    image: imgProduct10
-  }
+  { image: imgProduct1 },
+  { image: imgProduct2 },
+  { image: imgProduct3 },
+  { image: imgProduct4 },
+  { image: imgProduct5 },
+  { image: imgProduct6 },
+  { image: imgProduct7 },
+  { image: imgProduct8 },
+  { image: imgProduct9 },
+  { image: imgProduct10 }
 ]
 </script>
 

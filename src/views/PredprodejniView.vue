@@ -2,24 +2,24 @@
   <div class="page-wrapper">
     <section class="page-hero">
       <div class="container">
-        <div class="page-hero-label">Prodejte výhodněji</div>
-        <h1 class="page-hero-title">Předprodejní příprava</h1>
-        <p class="page-hero-sub">Získejte za svůj vůz vyšší cenu díky profesionální přípravě</p>
+        <div class="page-hero-label">{{ t.predprodejni.heroLabel }}</div>
+        <h1 class="page-hero-title">{{ t.predprodejni.heroTitle }}</h1>
+        <p class="page-hero-sub">{{ t.predprodejni.heroSub }}</p>
       </div>
     </section>
 
     <!-- Factors -->
     <section class="page-section">
       <div class="container">
-        <h2 class="section-heading">Co ovlivňuje prodejní cenu vozu?</h2>
+        <h2 class="section-heading">{{ t.predprodejni.factorsTitle }}</h2>
         <div class="factors-grid">
           <div class="factor-card factor-yes">
             <div class="factor-header">
               <span class="factor-emoji">🫧</span>
-              <h3>Co zvyšuje cenu</h3>
+              <h3>{{ t.predprodejni.prosTitle }}</h3>
             </div>
             <ul>
-              <li v-for="item in pros" :key="item">
+              <li v-for="item in t.predprodejni.pros" :key="item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
@@ -30,10 +30,10 @@
           <div class="factor-card factor-no">
             <div class="factor-header">
               <span class="factor-emoji">🤢</span>
-              <h3>Co snižuje cenu</h3>
+              <h3>{{ t.predprodejni.consTitle }}</h3>
             </div>
             <ul>
-              <li v-for="item in cons" :key="item">
+              <li v-for="item in t.predprodejni.cons" :key="item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
@@ -48,29 +48,29 @@
     <!-- Before/After showcase -->
     <section class="showcase-section">
       <div class="container">
-        <img :src="feliciaSideBySide" alt="Škoda Felicia – před a po předprodejní přípravě" class="showcase-img" />
+        <img :src="feliciaSideBySide" :alt="t.predprodejni.showcaseAlt" class="showcase-img" />
       </div>
     </section>
 
     <!-- Packages -->
     <section class="page-section page-section-alt">
       <div class="container">
-        <h2 class="section-heading">Balíčky předprodejní přípravy</h2>
-        <p class="section-sub">Ceny pro vůz střední třídy. SUV / MPV příplatek 20 %, malé vozy sleva 20 %.</p>
+        <h2 class="section-heading">{{ t.predprodejni.packagesTitle }}</h2>
+        <p class="section-sub">{{ t.predprodejni.packagesSub }}</p>
         <div class="pkg-grid">
-          <div v-for="pkg in packages" :key="pkg.name" class="pkg-card" :class="{ highlight: pkg.highlight }">
-            <div v-if="pkg.highlight" class="pkg-badge">Nejoblíbenější</div>
-            <h3>{{ pkg.name }}</h3>
+          <div v-for="(pkg, i) in packages" :key="i" class="pkg-card" :class="{ highlight: pkg.highlight }">
+            <div v-if="pkg.highlight" class="pkg-badge">{{ t.predprodejni.badgeMostPopular }}</div>
+            <h3>{{ t.predprodejni.packages[i].name }}</h3>
             <ul class="pkg-items">
-              <li v-for="item in pkg.items" :key="item">
+              <li v-for="(item, j) in t.predprodejni.packages[i].items" :key="j">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
                 {{ item }}
               </li>
             </ul>
-            <div class="pkg-price">{{ pkg.price }}</div>
-            <RouterLink to="/#contact" class="btn btn-primary">Poptat balíček</RouterLink>
+            <div class="pkg-price">{{ t.predprodejni.packages[i].price }}</div>
+            <RouterLink to="/#contact" class="btn btn-primary">{{ t.predprodejni.packageBtn }}</RouterLink>
           </div>
         </div>
       </div>
@@ -78,9 +78,9 @@
 
     <section class="page-cta">
       <div class="container">
-        <h2>Prodáváte vůz?</h2>
-        <p>Napište mi — připravíme Váš vůz tak, aby zaujal na první pohled.</p>
-        <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat předprodejní přípravu</RouterLink>
+        <h2>{{ t.predprodejni.ctaTitle }}</h2>
+        <p>{{ t.predprodejni.ctaText }}</p>
+        <RouterLink to="/#contact" class="btn btn-primary btn-lg">{{ t.predprodejni.ctaBtn }}</RouterLink>
       </div>
     </section>
   </div>
@@ -88,53 +88,14 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useI18n } from '../i18n'
 import feliciaSideBySide from '../assets/images/Škoda Felicia/pred prodejem/side_by_side.webp'
 
-const pros = [
-  'Vizuální stav (první dojem) → až +15 % hodnoty',
-  'Perfektně vyčištěný interiér → kupující vnímá, že auto je „jako nové"',
-  'Odstranění skvrn a opotřebení → důležitý psychologický efekt',
-  'Odstranění drobných vad (škrábance, zažloutlá světla, zašlý lak)'
-]
-
-const cons = [
-  'Zápach (kouř, zvířata) → až -10 % hodnoty',
-  'Špinavý interiér → automatický tlak na slevu',
-  'Matný lak / škrábance → auto vypadá starší, než ve skutečnosti je',
-  'Špatné fotky → nedojde ani na osobní prohlídku vozu'
-]
+const { t } = useI18n()
 
 const packages = [
-  {
-    name: 'Kompletní příprava exteriér / interiér + focení',
-    price: '7 000 Kč',
-    items: [
-      'Detailní ruční mytí',
-      'Dekontaminace / leštění / voskování laku',
-      'Oživení nelakovaných plastů',
-      'Leštění světel a skel',
-      'Luxování, čištění a impregnace plastů',
-      'Tepování látkových / čištění a vyživení kožených sedaček',
-      'Provonění interiéru',
-      'Nafocení vozu pro inzerci'
-    ],
-    highlight: true
-  },
-  {
-    name: 'Základní příprava exteriér / interiér',
-    price: '4 000 Kč',
-    items: [
-      'Detailní ruční mytí',
-      'Rozleštění drobných defektů laku',
-      'Voskování laku',
-      'Oživení plastů',
-      'Leštění skel',
-      'Luxování',
-      'Čištění a impregnace plastů',
-      'Provonění interiéru'
-    ],
-    highlight: false
-  }
+  { highlight: true },
+  { highlight: false }
 ]
 </script>
 

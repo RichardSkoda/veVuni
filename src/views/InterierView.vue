@@ -2,9 +2,9 @@
   <div class="page-wrapper">
     <section class="page-hero">
       <div class="container">
-        <div class="page-hero-label">Péče o vůz</div>
-        <h1 class="page-hero-title">Interiér</h1>
-        <p class="page-hero-sub">Hloubkové čištění a ochrana interiéru Vašeho vozu</p>
+        <div class="page-hero-label">{{ t.interier.heroLabel }}</div>
+        <h1 class="page-hero-title">{{ t.interier.heroTitle }}</h1>
+        <p class="page-hero-sub">{{ t.interier.heroSub }}</p>
       </div>
     </section>
 
@@ -14,11 +14,11 @@
           <div v-for="(svc, i) in services" :key="i" class="svc-card">
             <div class="svc-number">{{ String(i + 1).padStart(2, '0') }}</div>
             <div class="svc-body">
-              <h3>{{ svc.title }}</h3>
-              <p>{{ svc.desc }}</p>
+              <h3>{{ t.interier.services[i].title }}</h3>
+              <p>{{ t.interier.services[i].desc }}</p>
             </div>
             <div v-if="svc.image" class="svc-product">
-              <img :src="svc.image" :alt="svc.title" loading="lazy" />
+              <img :src="svc.image" :alt="t.interier.services[i].title" loading="lazy" />
             </div>
           </div>
         </div>
@@ -27,11 +27,11 @@
 
     <section class="page-cta">
       <div class="container">
-        <h2>Zajímá vás konkrétní služba?</h2>
-        <p>Sestavíme Vám cenovou nabídku přímo na míru.</p>
+        <h2>{{ t.interier.ctaTitle }}</h2>
+        <p>{{ t.interier.ctaText }}</p>
         <div class="cta-btns">
-          <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat nezávazně</RouterLink>
-          <RouterLink to="/cenik" class="btn btn-outline btn-lg">Zobrazit ceník</RouterLink>
+          <RouterLink to="/#contact" class="btn btn-primary btn-lg">{{ t.interier.ctaBtn1 }}</RouterLink>
+          <RouterLink to="/cenik" class="btn btn-outline btn-lg">{{ t.interier.ctaBtn2 }}</RouterLink>
         </div>
       </div>
     </section>
@@ -40,6 +40,9 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
 
 import imgProduct1 from '../assets/images/Produkty chemie/d0 (1).webp'
 import imgProduct2 from '../assets/images/Produkty chemie/d0.jpg'
@@ -48,31 +51,11 @@ import imgProduct4 from '../assets/images/Produkty chemie/ImgW (8).webp'
 import imgProduct5 from '../assets/images/Produkty chemie/63600_meguiar-s-carpet-cloth-re-fresher-odstranovac-zapachu--vune-do-interieru-a-ozivovac-tkanin--709-ml.webp'
 
 const services = [
-  {
-    title: 'Luxování interiéru',
-    desc: 'Stejně jako exteriér, tak i interiér vozu je potřeba před začátkem detailingových prací řádně připravit. Důkladné luxování je činnost, kterou je potřeba začít. Samozřejmostí je luxování průduchů klimatizace i kufru.',
-    image: imgProduct1
-  },
-  {
-    title: 'Tepování koberců a čalouněných sedaček',
-    desc: 'Jedná se o hloubkové čištění látkových i velurových prvků interiéru. Do textilie se pod tlakem nanáší speciální kapalina, která je z vlákna vzápětí odsávána. Takto je textil vyčištěný do hloubky a přesto v něm po dokončení prací zůstává jen nízká zbytková vlhkost. K tepování je používán tepovač Kärcher 5.100.',
-    image: imgProduct2
-  },
-  {
-    title: 'Čištění a impregnace interiérových plastů',
-    desc: 'Měkčené i tvrdé plasty v interiéru je důležité nejen čistit, ale také chránit před UV zářením, aby postupně nesvětlaly a nedeformovaly se. Aplikací speciálního přípravku pro profesionální čištění interiéru v kombinaci s interiérovým detailerem Meguiar\'s řady Ultimate budou plasty ve Vašem vozu opět vypadat jako nové.',
-    image: imgProduct3
-  },
-  {
-    title: 'Čištění a impregnace kožených povrchů',
-    desc: 'Je možné čistit kůži hladkou i perforovanou. Rozdíl čištění obou typů je jak v technice, tak i množství použité čistící kapaliny. Čištění perforované kůže zabere cca dvojnásobek času. Zásadní částí péče o kůži je její vyživení. K této proceduře je používán špičkový přírodní balzám, který kůži vyživuje, chrání a zanechává ji voňavou a příjemnou na dotek.',
-    image: imgProduct4
-  },
-  {
-    title: 'Provonění interiéru, desinfekce klimatizace',
-    desc: 'Případné pachy ve voze je důležité nepřekrývat, ale likvidovat. Po detekci a odstranění zdroje zápachu je možné kontaminovaná místa ošetřit speciálním přípravkem, který pachy eliminuje a vytváří v interiéru dlouhotrvající vůni. Klimatizaci je možné rychle desinfikovat pomocí jednorázového prostředku Air Re-Fresher.',
-    image: imgProduct5
-  }
+  { image: imgProduct1 },
+  { image: imgProduct2 },
+  { image: imgProduct3 },
+  { image: imgProduct4 },
+  { image: imgProduct5 }
 ]
 </script>
 

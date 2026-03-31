@@ -2,9 +2,9 @@
   <div class="page-wrapper">
     <section class="page-hero">
       <div class="container">
-        <div class="page-hero-label">Transparentní ceny</div>
-        <h1 class="page-hero-title">Ceník služeb</h1>
-        <p class="page-hero-sub">Ceny jsou počítány na vůz střední třídy</p>
+        <div class="page-hero-label">{{ t.cenik.heroLabel }}</div>
+        <h1 class="page-hero-title">{{ t.cenik.heroTitle }}</h1>
+        <p class="page-hero-sub">{{ t.cenik.heroSub }}</p>
       </div>
     </section>
 
@@ -16,11 +16,11 @@
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
           <p>
-            Ceny jsou počítány na vůz střední třídy.
-            <strong>Malé vozy – sleva 20 %.</strong>
-            <strong>Vozy vyšší třídy, SUV, MPV – příplatek 20 %.</strong>
-            Všechny ceny jsou uvedeny včetně 21 % DPH. Jsem plátce DPH.
-            Při spojení programů „komplet" — čištění a provonění klimatizace Air Re-Fresher <strong>zdarma</strong>.
+            {{ t.cenik.disclaimerText }}
+            <strong>{{ t.cenik.disclaimerSmall }}</strong>
+            <strong>{{ t.cenik.disclaimerLarge }}</strong>
+            {{ t.cenik.disclaimerVat }}
+            {{ t.cenik.disclaimerBonus }} <strong>{{ t.cenik.disclaimerFree }}</strong>.
           </p>
         </div>
       </div>
@@ -29,22 +29,22 @@
     <!-- Packages -->
     <section class="page-section">
       <div class="container">
-        <h2 class="section-heading">Zvýhodněné balíčky</h2>
+        <h2 class="section-heading">{{ t.cenik.packagesTitle }}</h2>
         <div class="packages-grid">
-          <div v-for="pkg in packages" :key="pkg.name" class="pkg-card" :class="{ highlight: pkg.highlight }">
+          <div v-for="(pkg, i) in packages" :key="i" class="pkg-card" :class="{ highlight: pkg.highlight }">
             <div class="pkg-header">
-              <h3>{{ pkg.name }}</h3>
-              <div class="pkg-time">{{ pkg.time }}</div>
+              <h3>{{ t.cenik.packages[i].name }}</h3>
+              <div class="pkg-time">{{ t.cenik.packages[i].time }}</div>
             </div>
             <ul class="pkg-items">
-              <li v-for="item in pkg.items" :key="item">
+              <li v-for="(item, j) in t.cenik.packages[i].items" :key="j">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
                 {{ item }}
               </li>
             </ul>
-            <div class="pkg-price">{{ pkg.price }}</div>
+            <div class="pkg-price">{{ t.cenik.packages[i].price }}</div>
           </div>
         </div>
       </div>
@@ -53,9 +53,9 @@
     <!-- Individual -->
     <section class="page-section page-section-alt">
       <div class="container">
-        <h2 class="section-heading">Jednotlivé úkony</h2>
+        <h2 class="section-heading">{{ t.cenik.individualTitle }}</h2>
         <div class="price-table">
-          <div v-for="item in individual" :key="item.name" class="price-row">
+          <div v-for="(item, i) in t.cenik.individual" :key="i" class="price-row">
             <div class="price-name">{{ item.name }}</div>
             <div class="price-time">{{ item.time }}</div>
             <div class="price-val">{{ item.price }}</div>
@@ -66,9 +66,9 @@
 
     <section class="page-cta">
       <div class="container">
-        <h2>Chcete přesnou nabídku?</h2>
-        <p>Napište mi, popište Váš vůz a zájem – připravím nabídku přímo pro Vás.</p>
-        <RouterLink to="/#contact" class="btn btn-primary btn-lg">Poptat nezávazně</RouterLink>
+        <h2>{{ t.cenik.ctaTitle }}</h2>
+        <p>{{ t.cenik.ctaText }}</p>
+        <RouterLink to="/#contact" class="btn btn-primary btn-lg">{{ t.cenik.ctaBtn }}</RouterLink>
       </div>
     </section>
   </div>
@@ -76,82 +76,15 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
 
 const packages = [
-  {
-    name: 'Exteriér komplet',
-    time: 'cca 6 hodin',
-    price: '4 000 Kč',
-    items: [
-      'Dočištění exteriéru včetně rámů dveří a prahů',
-      'Dekontaminace laku – Clay',
-      'Rozleštění lokálních defektů laku',
-      'Voskování laku',
-      'Vyživení nelakovaných plastů',
-      'Očištění a ošetření disků kol',
-      'Vyleštění skel, aplikace tekutých stěračů'
-    ],
-    highlight: true
-  },
-  {
-    name: 'Exteriér základ',
-    time: 'cca 3 hodiny',
-    price: '2 200 Kč',
-    items: [
-      'Dočištění exteriéru včetně rámů dveří a prahů',
-      'Voskování laku',
-      'Vyživení nelakovaných plastů',
-      'Očištění a ošetření disků kol',
-      'Vyleštění skel, aplikace tekutých stěračů'
-    ],
-    highlight: false
-  },
-  {
-    name: 'Interiér komplet',
-    time: 'cca 4 hodiny',
-    price: '2 500 Kč',
-    items: [
-      'Čištění rámů dveří a prahů',
-      'Luxování',
-      'Tepování koberečků',
-      'Tepování látkových / čištění a impregnace kožených sedaček',
-      'Čištění a ošetření plastů včetně palubní desky',
-      'Vyleštění skel z vnitřní strany',
-      'Provonění interiéru'
-    ],
-    highlight: true
-  },
-  {
-    name: 'Interiér základ',
-    time: 'cca 2 hodiny',
-    price: '1 400 Kč',
-    items: [
-      'Čištění rámů dveří a prahů',
-      'Luxování',
-      'Čištění a ošetření plastů včetně palubní desky',
-      'Vyleštění skel z vnitřní strany',
-      'Provonění interiéru'
-    ],
-    highlight: false
-  }
-]
-
-const individual = [
-  { name: 'Ruční dočištění exteriéru detailerem, včetně rámů dveří a prahů', time: 'cca 60 min', price: '800 Kč' },
-  { name: 'Dekontaminace laku – Clay', time: 'cca 90 min', price: '1 000 Kč' },
-  { name: 'Rozleštění lokálních defektů laku mikroabrazivní leštěnkou', time: 'cca 20–60 min', price: '300–1 000 Kč' },
-  { name: 'Jednokrokové leštění laku neabrazivní / mikroabrazivní leštěnkou', time: 'cca 150 min', price: '2 000 Kč' },
-  { name: 'Voskování laku – technologie syntetických polymerů', time: 'cca 60 min', price: '1 000 Kč' },
-  { name: 'Leštění světlometů', time: 'cca 30 min', price: '400 Kč' },
-  { name: 'Vyživení nelakovaných exteriérových plastů', time: 'cca 20–40 min', price: '200–450 Kč' },
-  { name: 'Dočištění a ošetření disků kol', time: 'cca 30 min', price: '350 Kč' },
-  { name: 'Luxování vozu, včetně kufru', time: 'cca 30 min', price: '400 Kč' },
-  { name: 'Tepování podlahy a koberečků', time: 'cca 45 min', price: '600 Kč' },
-  { name: 'Tepování čalouněných sedaček', time: 'cca 90 min', price: '1 400 Kč' },
-  { name: 'Čištění a impregnace kožených / alcantarových sedaček', time: 'cca 120 min', price: '1 700 Kč' },
-  { name: 'Čištění a impregnace vnitřních plastů včetně palubní desky', time: 'cca 60 min', price: '800 Kč' },
-  { name: 'Leštění skel vozu + nanesení „tekutých stěračů"', time: 'cca 30 min', price: '400 Kč' },
-  { name: 'Čištění a provonění klimatizace Air Re-Fresher', time: 'cca 20 min', price: '500 Kč' }
+  { highlight: true },
+  { highlight: false },
+  { highlight: true },
+  { highlight: false }
 ]
 </script>
 

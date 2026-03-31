@@ -292,6 +292,12 @@ const scrollToServices = () => {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@media (max-width: 1920px) {
+  .hero-stats {
+    justify-content: flex-end;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-bg {
     background-position: center;
