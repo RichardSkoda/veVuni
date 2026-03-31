@@ -10,33 +10,37 @@
       }"></div>
     </div>
     <div class="container hero-content">
-      <div class="hero-text">
-        <div class="hero-badge">{{ t.hero.badge }}</div>
-        <h1 class="hero-title">
-          <span class="hero-title-line">{{ t.hero.titleLine1 }}</span>
-          <span class="hero-title-accent">{{ t.hero.titleLine2 }}</span>
-        </h1>
-        <p class="hero-description">
-          {{ t.hero.description }}
-        </p>
-        <div class="hero-actions">
-          <button class="btn btn-primary btn-lg" @click="scrollToContact">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            {{ t.hero.ctaPrimary }}
-          </button>
-          <button class="btn btn-outline btn-lg" @click="scrollToServices">
-            {{ t.hero.ctaSecondary }}
-          </button>
+      <div class="hero-top">
+        <div class="hero-left">
+          <div class="hero-badge">{{ t.hero.badge }}</div>
+          <h1 class="hero-title">
+            <span class="hero-title-line">{{ t.hero.titleLine1 }}</span>
+            <span class="hero-title-accent">{{ t.hero.titleLine2 }}</span>
+          </h1>
         </div>
-        <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-number">{{ t.hero.stat2Number }}</span>
-            <span class="stat-label">{{ t.hero.stat2Label }}</span>
+        <div class="hero-right">
+          <p class="hero-description">
+            {{ t.hero.description }}
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" @click="scrollToContact">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              {{ t.hero.ctaPrimary }}
+            </button>
+            <button class="btn btn-outline btn-lg" @click="scrollToServices">
+              {{ t.hero.ctaSecondary }}
+            </button>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-number">{{ t.hero.stat3Number }}</span>
-            <span class="stat-label">{{ t.hero.stat3Label }}</span>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">{{ t.hero.stat2Number }}</span>
+              <span class="stat-label">{{ t.hero.stat2Label }}</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-number">{{ t.hero.stat3Number }}</span>
+              <span class="stat-label">{{ t.hero.stat3Label }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -67,7 +71,7 @@ const scrollToServices = () => {
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   overflow: hidden;
   background-color: #0b0f14;
 }
@@ -81,18 +85,18 @@ const scrollToServices = () => {
   z-index: 0;
 }
 
-/* Gradient overlay – solid dark on the left, fading to transparent on the right */
+/* Gradient overlay – dark on top, fading to transparent at bottom */
 .hero-overlay {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(
-      to right,
-      rgba(11, 15, 20, 0.92) 0%,
-      rgba(11, 15, 20, 0.85) 30%,
-      rgba(11, 15, 20, 0.55) 55%,
-      rgba(11, 15, 20, 0.15) 75%,
-      transparent 100%
+      to bottom,
+      rgba(11, 15, 20, 0.93) 0%,
+      rgba(11, 15, 20, 0.85) 25%,
+      rgba(11, 15, 20, 0.55) 45%,
+      rgba(11, 15, 20, 0.2) 65%,
+      transparent 80%
     );
   z-index: 1;
 }
@@ -102,7 +106,7 @@ const scrollToServices = () => {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 15% 60%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 50% 20%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -145,14 +149,26 @@ const scrollToServices = () => {
 .hero-content {
   position: relative;
   z-index: 2;
-  padding-top: calc(var(--header-height) + 3rem);
-  padding-bottom: 4rem;
-  display: flex;
+  padding-top: calc(var(--header-height) + 2rem);
+  padding-bottom: 0;
+  width: 100%;
 }
 
-.hero-text {
-  max-width: 560px;
-  text-align: left;
+.hero-top {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.hero-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-right {
+  flex: 1;
+  min-width: 0;
+  padding-top: 0.5rem;
 }
 
 .hero-badge {
@@ -285,18 +301,16 @@ const scrollToServices = () => {
     background:
       linear-gradient(
         to bottom,
-        rgba(11, 15, 20, 0.7) 0%,
-        rgba(11, 15, 20, 0.6) 40%,
-        rgba(11, 15, 20, 0.8) 100%
+        rgba(11, 15, 20, 0.85) 0%,
+        rgba(11, 15, 20, 0.7) 40%,
+        rgba(11, 15, 20, 0.3) 70%,
+        transparent 100%
       );
   }
 
-  .hero-content {
-    justify-content: center;
-  }
-
-  .hero-text {
-    max-width: 100%;
+  .hero-top {
+    flex-direction: column;
+    gap: 1.5rem;
     text-align: center;
   }
 
