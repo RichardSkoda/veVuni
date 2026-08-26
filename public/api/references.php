@@ -16,14 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+require_once __DIR__ . '/lib.php';
+
 // --- Config ---
 $dataDir    = __DIR__ . '/data';
 $dataFile   = $dataDir . '/references.json';
 $uploadsDir = __DIR__ . '/uploads/references';
-
-// Admin password hash — change this on first deploy!
-// Default: "VeVuniAdmin2026" — generate new hash: php -r "echo password_hash('YourPassword', PASSWORD_BCRYPT);"
-$adminPasswordHash = '$2a$12$k2QS8srOuBlNgVCUr924ROa0hYcMt3XaKgR9jGMOMLyBuEL8M3VV.';
 
 // Create directories if needed
 if (!is_dir($dataDir)) {
@@ -47,19 +45,6 @@ function saveReferences($file, $data) {
     file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }
 
-function verifyAdmin($hash) {
-    $token = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? '';
-    if (!$token || !password_verify($token, $hash)) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Neplatné heslo.']);
-        exit;
-    }
-}
-
-function sanitize($str) {
-    return htmlspecialchars(trim($str), ENT_QUOTES, 'UTF-8');
-}
-
 // --- GET: return all references ---
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $refs = loadReferences($dataFile);
@@ -69,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 // --- POST ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    verifyAdmin($adminPasswordHash);
+    requireAdmin();
 
     // Delete reference
     if (isset($_GET['delete'])) {

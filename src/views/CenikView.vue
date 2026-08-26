@@ -44,7 +44,7 @@
                 {{ item }}
               </li>
             </ul>
-            <div class="pkg-price">{{ t.cenik.packages[i].price }}</div>
+            <div class="pkg-price">{{ packagePrice(i) }}</div>
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@
           <div v-for="(item, i) in t.cenik.individual" :key="i" class="price-row">
             <div class="price-name">{{ item.name }}</div>
             <div class="price-time">{{ item.time }}</div>
-            <div class="price-val">{{ item.price }}</div>
+            <div class="price-val">{{ individualPrice(i) }}</div>
           </div>
         </div>
       </div>
@@ -75,10 +75,11 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from '../i18n'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const packages = [
   { highlight: true },
@@ -86,6 +87,36 @@ const packages = [
   { highlight: true },
   { highlight: false }
 ]
+
+// Price overrides set from the admin panel (stored in Kč); default prices
+// come from the static i18n texts.
+const priceOverrides = ref({ packages: {}, individual: {} })
+
+onMounted(() => {
+  fetch('/api/cenik.php')
+    .then(r => r.json())
+    .then(data => {
+      priceOverrides.value = {
+        packages: data?.packages || {},
+        individual: data?.individual || {}
+      }
+    })
+    .catch(() => {})
+})
+
+function localizePrice(price) {
+  return locale.value === 'en' ? price.replace(/Kč/gi, 'CZK') : price
+}
+
+function packagePrice(i) {
+  const override = priceOverrides.value.packages[i]
+  return override ? localizePrice(override) : t.value.cenik.packages[i].price
+}
+
+function individualPrice(i) {
+  const override = priceOverrides.value.individual[i]
+  return override ? localizePrice(override) : t.value.cenik.individual[i].price
+}
 </script>
 
 <style scoped>

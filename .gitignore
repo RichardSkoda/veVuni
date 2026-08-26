@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Server-side runtime data (admin password hash, references, uploaded photos,
+# price overrides) — created on the host, never committed.
+public/api/data/
+public/api/uploads/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

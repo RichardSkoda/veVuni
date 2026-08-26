@@ -93,6 +93,61 @@
           </form>
         </div>
 
+        <!-- Pricing editor -->
+        <div class="admin-form-card">
+          <h2>Upravit ceník</h2>
+
+          <div v-if="cenikResult" class="admin-alert" :class="cenikResult.type">
+            {{ cenikResult.message }}
+          </div>
+
+          <p v-if="loadingCenik" class="admin-loading">Načítám...</p>
+          <form v-else @submit.prevent="saveCenik" class="admin-form">
+            <h3 class="admin-subheading">Balíčky</h3>
+            <div class="cenik-edit-list">
+              <div v-for="(pkg, i) in t.cenik.packages" :key="'pkg-' + i" class="cenik-edit-row">
+                <span class="cenik-edit-name">{{ pkg.name }}</span>
+                <input v-model="packagePrices[i]" type="text" class="admin-input cenik-price-input" placeholder="např. 4 000 Kč" />
+              </div>
+            </div>
+
+            <h3 class="admin-subheading">Jednotlivé úkony</h3>
+            <div class="cenik-edit-list">
+              <div v-for="(item, i) in t.cenik.individual" :key="'ind-' + i" class="cenik-edit-row">
+                <span class="cenik-edit-name">{{ item.name }}</span>
+                <input v-model="individualPrices[i]" type="text" class="admin-input cenik-price-input" placeholder="např. 800 Kč" />
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" :disabled="savingCenik">
+              {{ savingCenik ? 'Ukládám...' : 'Uložit ceník' }}
+            </button>
+          </form>
+        </div>
+
+        <!-- Change password -->
+        <div class="admin-form-card">
+          <h2>Změnit heslo</h2>
+
+          <div v-if="pwResult" class="admin-alert" :class="pwResult.type">
+            {{ pwResult.message }}
+          </div>
+
+          <form @submit.prevent="changePassword" class="admin-form">
+            <div class="form-group">
+              <label>Nové heslo (min. 10 znaků)</label>
+              <input v-model="newPassword" type="password" class="admin-input" autocomplete="new-password" />
+            </div>
+            <div class="form-group">
+              <label>Potvrzení nového hesla</label>
+              <input v-model="newPasswordConfirm" type="password" class="admin-input" autocomplete="new-password" />
+            </div>
+            <button type="submit" class="btn btn-primary" :disabled="changingPassword">
+              {{ changingPassword ? 'Měním...' : 'Změnit heslo' }}
+            </button>
+          </form>
+        </div>
+
         <!-- Existing dynamic references -->
         <div class="admin-list-card">
           <h2>Přidané reference ({{ existingRefs.length }})</h2>
@@ -127,6 +182,9 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
 
 const password = ref('')
 const authenticated = ref(false)
@@ -146,23 +204,32 @@ const existingRefs = ref([])
 const loadingRefs = ref(false)
 const deletingId = ref(null)
 
+// Pricing editor state
+const packagePrices = ref([])
+const individualPrices = ref([])
+const loadingCenik = ref(false)
+const savingCenik = ref(false)
+const cenikResult = ref(null)
+
+// Change password state
+const newPassword = ref('')
+const newPasswordConfirm = ref('')
+const changingPassword = ref(false)
+const pwResult = ref(null)
+
 function login() {
   authError.value = ''
-  // Verify password against PHP backend
-  fetch('/api/references.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Admin-Token': password.value
-    },
-    body: JSON.stringify({})
+  fetch('/api/admin-auth.php', {
+    headers: { 'X-Admin-Token': password.value }
   }).then(r => {
     if (r.status === 401) {
       authError.value = 'Neplatné heslo.'
-    } else {
-      // Password works (even if the request fails for other reasons like missing fields)
+    } else if (r.ok) {
       authenticated.value = true
       loadExistingRefs()
+      loadCenik()
+    } else {
+      authError.value = 'Chyba připojení k serveru.'
     }
   }).catch(() => {
     authError.value = 'Chyba připojení k serveru.'
@@ -271,6 +338,86 @@ async function deleteRef(id) {
     // silently fail
   } finally {
     deletingId.value = null
+  }
+}
+
+function loadCenik() {
+  loadingCenik.value = true
+  fetch('/api/cenik.php')
+    .then(r => r.json())
+    .then(data => {
+      const overrides = data || {}
+      packagePrices.value = t.value.cenik.packages.map((pkg, i) => overrides.packages?.[i] ?? pkg.price)
+      individualPrices.value = t.value.cenik.individual.map((item, i) => overrides.individual?.[i] ?? item.price)
+    })
+    .catch(() => {
+      packagePrices.value = t.value.cenik.packages.map(pkg => pkg.price)
+      individualPrices.value = t.value.cenik.individual.map(item => item.price)
+    })
+    .finally(() => { loadingCenik.value = false })
+}
+
+async function saveCenik() {
+  savingCenik.value = true
+  cenikResult.value = null
+  try {
+    const res = await fetch('/api/cenik.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Token': password.value
+      },
+      body: JSON.stringify({
+        packages: Object.fromEntries(packagePrices.value.map((p, i) => [i, p.trim()])),
+        individual: Object.fromEntries(individualPrices.value.map((p, i) => [i, p.trim()]))
+      })
+    })
+    const data = await res.json()
+    cenikResult.value = (res.ok && data.success)
+      ? { type: 'success', message: 'Ceník byl uložen.' }
+      : { type: 'error', message: data.error || 'Nepodařilo se uložit ceník.' }
+  } catch {
+    cenikResult.value = { type: 'error', message: 'Chyba připojení k serveru.' }
+  } finally {
+    savingCenik.value = false
+  }
+}
+
+async function changePassword() {
+  pwResult.value = null
+
+  if (newPassword.value.length < 10) {
+    pwResult.value = { type: 'error', message: 'Nové heslo musí mít alespoň 10 znaků.' }
+    return
+  }
+  if (newPassword.value !== newPasswordConfirm.value) {
+    pwResult.value = { type: 'error', message: 'Hesla se neshodují.' }
+    return
+  }
+
+  changingPassword.value = true
+  try {
+    const res = await fetch('/api/admin-auth.php?action=change-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Token': password.value
+      },
+      body: JSON.stringify({ newPassword: newPassword.value })
+    })
+    const data = await res.json()
+    if (res.ok && data.success) {
+      password.value = newPassword.value
+      newPassword.value = ''
+      newPasswordConfirm.value = ''
+      pwResult.value = { type: 'success', message: 'Heslo bylo změněno.' }
+    } else {
+      pwResult.value = { type: 'error', message: data.error || 'Nepodařilo se změnit heslo.' }
+    }
+  } catch {
+    pwResult.value = { type: 'error', message: 'Chyba připojení k serveru.' }
+  } finally {
+    changingPassword.value = false
   }
 }
 </script>
@@ -439,6 +586,47 @@ async function deleteRef(id) {
 .admin-textarea {
   resize: vertical;
   min-height: 80px;
+}
+
+/* Pricing editor */
+.admin-subheading {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin: 0.5rem 0 0.25rem;
+}
+
+.cenik-edit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cenik-edit-row {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cenik-edit-name {
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.cenik-price-input {
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .cenik-edit-row {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .cenik-price-input {
+    text-align: left;
+  }
 }
 
 /* File upload */
